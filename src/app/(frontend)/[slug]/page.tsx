@@ -1,17 +1,15 @@
 import type { Metadata } from 'next'
 
-import { PayloadRedirects } from '@/components/PayloadRedirects'
-import configPromise from '@payload-config'
+import configPromise from '@/payload/config'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import { homeStatic } from '@/endpoints/seed/home-static'
 
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { RenderHero } from '@/heros/RenderHero'
-import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { RenderBlocks } from '@/payload/blocks/RenderBlocks'
+import { LivePreviewListener } from '@/payload/components/LivePreviewListener'
+import { PayloadRedirects } from '@/payload/components/PayloadRedirects'
+import { generateMeta } from '@/lib/utilities/generateMeta'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -55,16 +53,11 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug: decodedSlug,
   })
 
-  // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
-    page = homeStatic
-  }
-
   if (!page) {
     return <PayloadRedirects url={url} />
   }
 
-  const { hero, layout } = page
+  // const { hero, layout } = page
 
   return (
     <article className="pt-16 pb-24">
@@ -74,8 +67,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
+      {/* <RenderBlocks blocks={layout} /> */}
     </article>
   )
 }
