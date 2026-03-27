@@ -30,7 +30,7 @@ npx create-landing-seo@latest my-landing
 Or clone manually:
 
 ```bash
-git clone https://github.com/yourusername/seo-landing-constructor.git
+git clone https://github.com/AntonAmbarov/create-seo-landing.git
 cd seo-landing-constructor
 cp .env.example .env
 pnpm install
