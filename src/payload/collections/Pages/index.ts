@@ -5,6 +5,7 @@ import { authenticatedOrPublished } from '../../../access/authenticatedOrPublish
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../../lib/hooks/populatePublishedAt'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
+import { HeroConfig } from '@/payload/blocks/hero.config'
 
 import {
   MetaDescriptionField,
@@ -14,6 +15,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath'
+import { blocks } from 'payload/shared'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -57,24 +59,6 @@ export const Pages: CollectionConfig<'pages'> = {
     {
       type: 'tabs',
       tabs: [
-        // {
-        //   fields: [hero],
-        //   label: 'Hero',
-        // },
-        // {
-        //   fields: [
-        //     {
-        //       name: 'layout',
-        //       type: 'blocks',
-        //       blocks: [],
-        //       required: true,
-        //       admin: {
-        //         initCollapsed: true,
-        //       },
-        //     },
-        //   ],
-        //   label: 'Content',
-        // },
         {
           name: 'meta',
           label: 'SEO',
@@ -86,9 +70,6 @@ export const Pages: CollectionConfig<'pages'> = {
             }),
             MetaTitleField({
               hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: 'media',
             }),
 
             MetaDescriptionField({}),
@@ -104,6 +85,7 @@ export const Pages: CollectionConfig<'pages'> = {
         },
       ],
     },
+    { name: 'blocks', type: 'blocks', blocks: [HeroConfig] },
     {
       name: 'publishedAt',
       type: 'date',

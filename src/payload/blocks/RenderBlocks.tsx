@@ -1,38 +1,37 @@
-import React, { Fragment } from 'react'
-
 import { Page } from '../payload-types'
+import { Hero } from '@/components/blocks/Hero'
 
-const blockComponents: Record<string, React.ComponentType<any>> = {}
+const blockComponents = {
+  hero: Hero,
+} as const
 
-export const RenderBlocks: React.FC<{
-  blocks: Page['layout'][0][]
-}> = (props) => {
-  const { blocks } = props
+type BlockType = keyof typeof blockComponents
 
-  const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
+type Props = {
+  blocks: Page['blocks'] | null | undefined
+}
 
-  if (hasBlocks) {
-    return (
-      <Fragment>
-        {blocks.map((block, index) => {
-          const { blockType } = block
-
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
-
-            if (Block) {
-              return (
-                <div className="my-16" key={index}>
-                  <Block {...block} disableInnerContainer />
-                </div>
-              )
-            }
-          }
-          return null
-        })}
-      </Fragment>
-    )
+export function RenderBlocks({ blocks }: Props) {
+  if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {
+    return null
   }
 
-  return null
+  return (
+    <>
+      {blocks.map((block, index) => {
+        const BlockComponent = blockComponents[block.blockType as BlockType]
+
+        if (!BlockComponent) {
+          console.warn(`The component for the type block was not found.: ${block.blockType}`)
+          return null
+        }
+
+        return (
+          <section key={block.id || index} className="my-16 first:mt-0 last:mb-0">
+            <BlockComponent {...block} />
+          </section>
+        )
+      })}
+    </>
+  )
 }

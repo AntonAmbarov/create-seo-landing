@@ -1,25 +1,61 @@
-import React, { Fragment } from 'react'
+// src/components/Media/Media.tsx
+import React from 'react'
+import NextImage from 'next/image'
 
-import type { Props } from './types'
+import type { Media as MediaType } from '@/payload/payload-types'
+import { getMediaUrl } from '@/lib/utilities/getMediaUrl'
+import { cn } from '@/lib/utilities/ui'
 
-import { ImageMedia } from './ImageMedia'
-import { VideoMedia } from './VideoMedia'
+type Props = {
+  resource?: MediaType | string | null
+  alt?: string
+  className?: string
+  fill?: boolean
+  priority?: boolean
+  sizes?: string
+  width?: number
+  height?: number
+}
 
-export const Media: React.FC<Props> = (props) => {
-  const { className, htmlElement = 'div', resource } = props
+export function Media({
+  resource,
+  alt = '',
+  className,
+  fill = false,
+  priority = false,
+  sizes,
+  width,
+  height,
+}: Props) {
+  if (!resource) return null
 
-  const isVideo = typeof resource === 'object' && resource?.mimeType?.includes('video')
-  const Tag = htmlElement || Fragment
+  let src: string
+  let finalAlt = alt
+  let finalWidth = width
+  let finalHeight = height
+
+  if (typeof resource === 'object') {
+    src = getMediaUrl(resource.url)
+    finalAlt = alt || resource.alt || ''
+    finalWidth = width || resource.width || undefined
+    finalHeight = height || resource.height || undefined
+  } else {
+    src = getMediaUrl(resource)
+  }
 
   return (
-    <Tag
-      {...(htmlElement !== null
-        ? {
-            className,
-          }
-        : {})}
-    >
-      {isVideo ? <VideoMedia {...props} /> : <ImageMedia {...props} />}
-    </Tag>
+    <div className={cn('relative overflow-hidden', className)}>
+      <NextImage
+        src={src}
+        alt={finalAlt}
+        fill={fill}
+        width={!fill ? finalWidth : undefined}
+        height={!fill ? finalHeight : undefined}
+        priority={priority}
+        quality={90}
+        sizes={sizes || '(max-width: 768px) 100vw, 50vw'}
+        className="object-cover"
+      />
+    </div>
   )
 }

@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import configPromise from '@/payload/config'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { cache } from 'react'
 
 import PageClient from './page.client'
 import { RenderBlocks } from '@/payload/blocks/RenderBlocks'
@@ -35,16 +35,16 @@ export async function generateStaticParams() {
   return params
 }
 
-type Args = {
+type Props = {
   params: Promise<{
     slug?: string
   }>
 }
 
-export default async function Page({ params: paramsPromise }: Args) {
+export default async function Page({ params: paramsPromise }: Props) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
-  // Decode to support slugs with special characters
+
   const decodedSlug = decodeURIComponent(slug)
   const url = '/' + decodedSlug
   let page: RequiredDataFromCollectionSlug<'pages'> | null
@@ -57,8 +57,6 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  // const { hero, layout } = page
-
   return (
     <article className="pt-16 pb-24">
       <PageClient />
@@ -67,14 +65,14 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      {/* <RenderBlocks blocks={layout} /> */}
+      <RenderBlocks blocks={page.blocks} />
     </article>
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
   const { slug = 'home' } = await paramsPromise
-  // Decode to support slugs with special characters
+
   const decodedSlug = decodeURIComponent(slug)
   const page = await queryPageBySlug({
     slug: decodedSlug,
