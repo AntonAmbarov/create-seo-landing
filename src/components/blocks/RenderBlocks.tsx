@@ -1,4 +1,4 @@
-import { Page } from '../payload-types'
+import { Page } from '../../payload/payload-types'
 import { Hero } from '@/components/blocks/Hero'
 
 const blockComponents = {

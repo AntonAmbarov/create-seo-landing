@@ -3,8 +3,8 @@ import Link from 'next/link'
 import type { Footer } from '@/payload/payload-types'
 
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { Logo } from '@/components/Logo/Logo'
-import { CMSLink } from '@/components/Link'
+import { Logo } from '@/components/common/Logo/Logo'
+import { CMSLink } from '@/components/common/Link'
 import { getCachedGlobal } from '@/lib/utilities/getGlobals'
 
 export async function Footer() {

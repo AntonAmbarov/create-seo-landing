@@ -8,17 +8,13 @@ import { Footer } from '@/components/layouts/Footer/Component'
 import { Header } from '@/components/layouts/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
-import { draftMode } from 'next/headers'
 
 import './globals.css'
 import { cn } from '@/lib/utilities/ui'
-import { AdminBar } from '@/payload/components/AdminBar'
 import { getServerSideURL } from '@/lib/utilities/getURL'
 import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isEnabled } = await draftMode()
-
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
       <head>
@@ -28,14 +24,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <Providers>
-          <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          />
-
           <Header />
-          {children}
+          <main>{children}</main>
           <Footer />
         </Providers>
       </body>
@@ -48,6 +38,5 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
   },
 }
