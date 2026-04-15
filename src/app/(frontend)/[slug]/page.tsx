@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 
-import configPromise from '@/payload/config'
-import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
+import { type RequiredDataFromCollectionSlug } from 'payload'
 
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { LivePreviewListener } from '@/payload/components/LivePreviewListener'

@@ -12,8 +12,9 @@ import { Users } from './collections/Users'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
 import { getServerSideURL } from '@/lib/utilities/getURL'
-import { Header } from '@/components/layouts/Header/config'
-import { Footer } from '@/components/layouts/Footer/config'
+import { Header } from './globals/Header'
+import { Footer } from './globals/Footer'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 

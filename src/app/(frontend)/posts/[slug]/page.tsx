@@ -1,19 +1,16 @@
 import type { Metadata } from 'next'
 
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
-import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { cache } from 'react'
 import RichText from '@/components/common/RichText'
 
 import type { Post } from '@/payload/payload-types'
 
-import { PostHero } from '@/heros/PostHero'
-import { generateMeta } from '@/utilities/generateMeta'
-import PageClient from './page.client'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { RedirectsHandler } from '@/components/common/RedirectsHandler'
+import { LivePreviewListener } from '@/payload/components/LivePreviewListener'
+import { generateMeta } from '@/lib/utilities/generateMeta'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -44,33 +41,21 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
-  // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const url = '/posts/' + decodedSlug
   const post = await queryPostBySlug({ slug: decodedSlug })
 
-  if (!post) return <PayloadRedirects url={url} />
+  if (!post) return <RedirectsHandler url={url} />
 
   return (
     <article className="pt-16 pb-16">
-      <PageClient />
-
-      {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
+      <RedirectsHandler disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
-
-      <PostHero post={post} />
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
           <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
-          {post.relatedPosts && post.relatedPosts.length > 0 && (
-            <RelatedPosts
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
-            />
-          )}
         </div>
       </div>
     </article>
@@ -79,7 +64,6 @@ export default async function Post({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = '' } = await paramsPromise
-  // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug: decodedSlug })
 

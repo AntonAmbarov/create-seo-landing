@@ -4,8 +4,6 @@ import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 
-import { Footer } from '@/components/layouts/Footer/Component'
-import { Header } from '@/components/layouts/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 
@@ -13,8 +11,14 @@ import './globals.css'
 import { cn } from '@/lib/utilities/ui'
 import { getServerSideURL } from '@/lib/utilities/getURL'
 import { mergeOpenGraph } from '@/lib/utilities/mergeOpenGraph'
+import { Header } from '@/components/layouts/Header'
+import { Footer } from '@/components/layouts/Footer'
+import { getHeader } from '@/lib/queries/getHeader'
+import { getFooter } from '@/lib/queries/getFooter'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const [headerData, footerData] = await Promise.all([getHeader(), getFooter()])
+
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
       <head>
@@ -24,9 +28,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <Providers>
-          <Header />
+          <Header data={headerData} />
           <main>{children}</main>
-          <Footer />
+          <Footer data={footerData} />
         </Providers>
       </body>
     </html>

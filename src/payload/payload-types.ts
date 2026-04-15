@@ -1227,26 +1227,20 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
+  /**
+   * Main navigation items
+   */
   navItems?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        label: string;
+        link: string;
+        isExternal?: boolean | null;
         id?: string | null;
       }[]
     | null;
+  showCta?: boolean | null;
+  ctaLabel?: string | null;
+  ctaLink?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1256,26 +1250,27 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  navItems?:
+  /**
+   * Add up to 4 columns
+   */
+  columns?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        title?: string | null;
+        links?:
+          | {
+              label: string;
+              link: string;
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
+  /**
+   * Text displayed at the bottom of the footer
+   */
+  copyright?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1287,17 +1282,14 @@ export interface HeaderSelect<T extends boolean = true> {
   navItems?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        label?: T;
+        link?: T;
+        isExternal?: T;
         id?: T;
       };
+  showCta?: T;
+  ctaLabel?: T;
+  ctaLink?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1307,20 +1299,21 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  columns?:
     | T
     | {
-        link?:
+        title?: T;
+        links?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
               label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
             };
         id?: T;
       };
+  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
