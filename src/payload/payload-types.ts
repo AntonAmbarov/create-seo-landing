@@ -104,10 +104,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    sitevariables: Sitevariable;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    sitevariables: SitevariablesSelect<false> | SitevariablesSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1275,6 +1277,30 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Global shortcodes and variables. Use {{key}} in any rich text field.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sitevariables".
+ */
+export interface Sitevariable {
+  id: number;
+  /**
+   * Add any variable you want to use as {{variableKey}}
+   */
+  variables?:
+    | {
+        /**
+         * Example: companyName, pricePro, discountPercent
+         */
+        key: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -1314,6 +1340,22 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sitevariables_select".
+ */
+export interface SitevariablesSelect<T extends boolean = true> {
+  variables?:
+    | T
+    | {
+        key?: T;
+        value?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

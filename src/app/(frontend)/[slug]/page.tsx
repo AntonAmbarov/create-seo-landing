@@ -1,68 +1,68 @@
-import type { Metadata } from 'next'
-import { draftMode } from 'next/headers'
+import type { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 
-import { type RequiredDataFromCollectionSlug } from 'payload'
+import { type RequiredDataFromCollectionSlug } from 'payload';
 
-import { RenderBlocks } from '@/components/blocks/RenderBlocks'
-import { LivePreviewListener } from '@/payload/components/LivePreviewListener'
-import { RedirectsHandler } from '@/components/common/RedirectsHandler'
-import { generateMeta } from '@/lib/utilities/generateMeta'
-import { queryPageBySlug } from '@/lib/queries/queryPageBySlug'
-import { queryPages } from '@/lib/queries/queryPages'
+import { RenderBlocks } from '@/components/blocks/RenderBlocks';
+import { LivePreviewListener } from '@/payload/components/LivePreviewListener';
+import { RedirectsHandler } from '@/components/common/RedirectsHandler';
+import { generateMeta } from '@/lib/utilities/generateMeta';
+import { queryPageBySlug } from '@/lib/queries/queryPageBySlug';
+import { queryPages } from '@/lib/queries/queryPages';
 
 type Props = {
-  params: Promise<{
-    slug?: string
-  }>
-}
+	params: Promise<{
+		slug?: string;
+	}>;
+};
 
 export async function generateStaticParams() {
-  const pages = await queryPages()
-  const slugs = pages
-    ?.filter((page) => {
-      return page.slug !== 'home'
-    })
-    .map(({ slug }) => {
-      return { slug }
-    })
+	const pages = await queryPages();
+	const slugs = pages
+		?.filter((page) => {
+			return page.slug !== 'home';
+		})
+		.map(({ slug }) => {
+			return { slug };
+		});
 
-  return slugs
+	return slugs;
 }
 
 export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
-  const { slug = 'home' } = await paramsPromise
+	const { slug = 'home' } = await paramsPromise;
 
-  const decodedSlug = decodeURIComponent(slug)
-  const page = await queryPageBySlug({
-    slug: decodedSlug,
-  })
+	const decodedSlug = decodeURIComponent(slug);
+	const page = await queryPageBySlug({
+		slug: decodedSlug,
+	});
 
-  return generateMeta({ doc: page })
+	return generateMeta({ doc: page });
 }
 
 export default async function Page({ params: paramsPromise }: Props) {
-  const { isEnabled: draft } = await draftMode()
-  const { slug = 'home' } = await paramsPromise
+	const { isEnabled: draft } = await draftMode();
+	const { slug = 'home' } = await paramsPromise;
 
-  const decodedSlug = decodeURIComponent(slug)
-  const url = '/' + decodedSlug
-  let page: RequiredDataFromCollectionSlug<'pages'> | null
+	const decodedSlug = decodeURIComponent(slug);
+	const url = '/' + decodedSlug;
+	let page: RequiredDataFromCollectionSlug<'pages'> | null;
 
-  page = await queryPageBySlug({
-    slug: decodedSlug,
-  })
+	page = await queryPageBySlug({
+		slug: decodedSlug,
+	});
 
-  if (!page) {
-    return <RedirectsHandler url={url} />
-  }
+	if (!page) {
+		return <RedirectsHandler url={url} />;
+	}
 
-  return (
-    <div className="pt-16 pb-24">
-      <RedirectsHandler disableNotFound url={url} />
+	return (
+		<div className="pt-16 pb-24">
+			<RedirectsHandler disableNotFound url={url} />
 
-      {draft && <LivePreviewListener />}
+			{draft && <LivePreviewListener />}
 
-      <RenderBlocks blocks={page.blocks} />
-    </div>
-  )
+			<RenderBlocks blocks={page.blocks} />
+		</div>
+	);
 }
