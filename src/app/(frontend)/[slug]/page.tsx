@@ -37,7 +37,7 @@ export async function generateMetadata({ params: paramsPromise }: Props): Promis
 		slug: decodedSlug,
 	});
 
-	return generateMeta({ doc: page });
+	return await generateMeta({ doc: page });
 }
 
 export default async function Page({ params: paramsPromise }: Props) {
@@ -57,7 +57,7 @@ export default async function Page({ params: paramsPromise }: Props) {
 	}
 
 	return (
-		<div className="pt-16 pb-24">
+		<div className="pb-24 pt-16">
 			<RedirectsHandler disableNotFound url={url} />
 
 			{draft && <LivePreviewListener />}

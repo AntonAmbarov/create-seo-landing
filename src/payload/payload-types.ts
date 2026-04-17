@@ -155,6 +155,11 @@ export interface Page {
   meta?: {
     title?: string | null;
     description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    canonicalURL?: string | null;
   };
   blocks?: HeroBlock[] | null;
   publishedAt?: string | null;
@@ -163,44 +168,13 @@ export interface Page {
    */
   generateSlug?: boolean | null;
   slug: string;
+  /**
+   * Be careful! This will prevent search engines from indexing the page.
+   */
+  noindex?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock".
- */
-export interface HeroBlock {
-  /**
-   * Main headline — keep it clear and benefit-oriented
-   */
-  title: string;
-  /**
-   * Short supporting text under the title
-   */
-  description?: string | null;
-  bullets?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Main visual for the hero section
-   */
-  image?: (number | null) | Media;
-  primaryCta: {
-    label: string;
-    link: string;
-  };
-  secondaryCta?: {
-    label?: string | null;
-    link?: string | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -273,6 +247,41 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  /**
+   * Main headline — keep it clear and benefit-oriented
+   */
+  title: string;
+  /**
+   * Short supporting text under the title
+   */
+  description?: string | null;
+  bullets?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Main visual for the hero section
+   */
+  image?: (number | null) | Media;
+  primaryCta: {
+    label: string;
+    link: string;
+  };
+  secondaryCta?: {
+    label?: string | null;
+    link?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -303,6 +312,7 @@ export interface Post {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    canonicalURL?: string | null;
   };
   publishedAt?: string | null;
   authors?: (number | User)[] | null;
@@ -317,6 +327,10 @@ export interface Post {
    */
   generateSlug?: boolean | null;
   slug: string;
+  /**
+   * Be careful! This will prevent search engines from indexing the page.
+   */
+  noindex?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -789,6 +803,8 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        image?: T;
+        canonicalURL?: T;
       };
   blocks?:
     | T
@@ -798,6 +814,7 @@ export interface PagesSelect<T extends boolean = true> {
   publishedAt?: T;
   generateSlug?: T;
   slug?: T;
+  noindex?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -847,6 +864,7 @@ export interface PostsSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        canonicalURL?: T;
       };
   publishedAt?: T;
   authors?: T;
@@ -858,6 +876,7 @@ export interface PostsSelect<T extends boolean = true> {
       };
   generateSlug?: T;
   slug?: T;
+  noindex?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

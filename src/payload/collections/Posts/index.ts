@@ -23,8 +23,6 @@ import {
 } from '@payloadcms/plugin-seo/fields';
 import { slugField } from 'payload';
 import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath';
-import { Banner } from '@payloadcms/ui';
-import { Code } from 'lucide-react';
 
 export const Posts: CollectionConfig<'posts'> = {
 	slug: 'posts',
@@ -148,6 +146,11 @@ export const Posts: CollectionConfig<'posts'> = {
 						}),
 
 						MetaDescriptionField({}),
+						{
+							name: 'canonicalURL',
+							type: 'text',
+							label: 'Canonical URL',
+						},
 						PreviewField({
 							// if the `generateUrl` function is configured
 							hasGenerateFn: true,
@@ -214,6 +217,16 @@ export const Posts: CollectionConfig<'posts'> = {
 			],
 		},
 		slugField(),
+		{
+			name: 'noindex',
+			type: 'checkbox',
+			label: 'Noindex',
+			defaultValue: false,
+			admin: {
+				description: 'Be careful! This will prevent search engines from indexing the page.',
+				position: 'sidebar',
+			},
+		},
 	],
 	hooks: {
 		afterChange: [revalidatePost],

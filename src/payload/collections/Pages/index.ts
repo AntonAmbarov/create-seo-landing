@@ -15,7 +15,6 @@ import {
 	PreviewField,
 } from '@payloadcms/plugin-seo/fields';
 import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath';
-import { blocks } from 'payload/shared';
 
 export const Pages: CollectionConfig<'pages'> = {
 	slug: 'pages',
@@ -71,8 +70,11 @@ export const Pages: CollectionConfig<'pages'> = {
 						MetaTitleField({
 							hasGenerateFn: true,
 						}),
-
 						MetaDescriptionField({}),
+						MetaImageField({
+							relationTo: 'media',
+							hasGenerateFn: true,
+						}),
 						PreviewField({
 							// if the `generateUrl` function is configured
 							hasGenerateFn: true,
@@ -81,6 +83,11 @@ export const Pages: CollectionConfig<'pages'> = {
 							titlePath: 'meta.title',
 							descriptionPath: 'meta.description',
 						}),
+						{
+							name: 'canonicalURL',
+							type: 'text',
+							label: 'Canonical URL',
+						},
 					],
 				},
 			],
@@ -94,6 +101,16 @@ export const Pages: CollectionConfig<'pages'> = {
 			},
 		},
 		slugField(),
+		{
+			name: 'noindex',
+			type: 'checkbox',
+			label: 'Noindex',
+			defaultValue: false,
+			admin: {
+				description: 'Be careful! This will prevent search engines from indexing the page.',
+				position: 'sidebar',
+			},
+		},
 	],
 	hooks: {
 		afterChange: [revalidatePage],

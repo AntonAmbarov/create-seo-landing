@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import type { Media, Page, Post, Config } from '../payload/payload-types';
+import type { Media, Page, Post, Config } from '@/payload/payload-types';
 
 import { mergeOpenGraph } from './mergeOpenGraph';
 import { getServerSideURL } from './getURL';
@@ -19,19 +19,26 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 	return url;
 };
 
-export const generateMeta = async (args: {
-	doc: Partial<Page> | Partial<Post> | null;
-}): Promise<Metadata> => {
+export function generateMeta(args: { doc: Partial<Page> | Partial<Post> | null }): Metadata {
 	const { doc } = args;
 
-	const ogImage = getImageURL(doc?.meta?.image);
+	if (!doc)
+		return {
+			title: 'SEO Landing Constructor',
+			description: 'Create high-converting SEO-optimized landing pages',
+		};
 
-	const title = doc?.meta?.title
-		? doc?.meta?.title + ' | Payload Website Template'
-		: 'Payload Website Template';
+	const title = `${doc.meta?.title || doc?.title || ''} | Create SEO-landing`;
+	const description = doc.meta?.description || '';
+	const canonical = doc.meta?.canonicalURL;
+	const ogImage = getImageURL(doc.meta?.image);
 
 	return {
-		description: doc?.meta?.description,
+		title,
+		description,
+		alternates: {
+			canonical: canonical || undefined,
+		},
 		openGraph: mergeOpenGraph({
 			description: doc?.meta?.description || '',
 			images: ogImage
@@ -44,6 +51,6 @@ export const generateMeta = async (args: {
 			title,
 			url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
 		}),
-		title,
+		robots: { index: !doc.noindex, follow: true },
 	};
-};
+}
