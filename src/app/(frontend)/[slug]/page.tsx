@@ -37,7 +37,7 @@ export async function generateMetadata({ params: paramsPromise }: Props): Promis
 		slug: decodedSlug,
 	});
 
-	return await generateMeta({ doc: page });
+	return generateMeta({ doc: page });
 }
 
 export default async function Page({ params: paramsPromise }: Props) {

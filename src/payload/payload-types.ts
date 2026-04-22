@@ -152,6 +152,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
+  blocks?: HeroBlock[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -161,7 +162,6 @@ export interface Page {
     image?: (number | null) | Media;
     canonicalURL?: string | null;
   };
-  blocks?: HeroBlock[] | null;
   publishedAt?: string | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
@@ -175,6 +175,41 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  /**
+   * Main headline — keep it clear and benefit-oriented
+   */
+  title: string;
+  /**
+   * Short supporting text under the title
+   */
+  description?: string | null;
+  bullets?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Main visual for the hero section
+   */
+  image?: (number | null) | Media;
+  primaryCta: {
+    label: string;
+    link: string;
+  };
+  secondaryCta?: {
+    label?: string | null;
+    link?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -244,41 +279,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock".
- */
-export interface HeroBlock {
-  /**
-   * Main headline — keep it clear and benefit-oriented
-   */
-  title: string;
-  /**
-   * Short supporting text under the title
-   */
-  description?: string | null;
-  bullets?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Main visual for the hero section
-   */
-  image?: (number | null) | Media;
-  primaryCta: {
-    label: string;
-    link: string;
-  };
-  secondaryCta?: {
-    label?: string | null;
-    link?: string | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -798,6 +798,11 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  blocks?:
+    | T
+    | {
+        hero?: T | HeroBlockSelect<T>;
+      };
   meta?:
     | T
     | {
@@ -805,11 +810,6 @@ export interface PagesSelect<T extends boolean = true> {
         description?: T;
         image?: T;
         canonicalURL?: T;
-      };
-  blocks?:
-    | T
-    | {
-        hero?: T | HeroBlockSelect<T>;
       };
   publishedAt?: T;
   generateSlug?: T;

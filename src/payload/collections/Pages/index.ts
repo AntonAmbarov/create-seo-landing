@@ -59,6 +59,10 @@ export const Pages: CollectionConfig<'pages'> = {
 			type: 'tabs',
 			tabs: [
 				{
+					label: 'Content',
+					fields: [{ name: 'blocks', type: 'blocks', blocks: [HeroConfig] }],
+				},
+				{
 					name: 'meta',
 					label: 'SEO',
 					fields: [
@@ -92,7 +96,6 @@ export const Pages: CollectionConfig<'pages'> = {
 				},
 			],
 		},
-		{ name: 'blocks', type: 'blocks', blocks: [HeroConfig] },
 		{
 			name: 'publishedAt',
 			type: 'date',
