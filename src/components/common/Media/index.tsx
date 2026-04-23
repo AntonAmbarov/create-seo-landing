@@ -1,5 +1,3 @@
-// src/components/Media/Media.tsx
-import React from 'react';
 import NextImage from 'next/image';
 
 import type { Media as MediaType } from '@/payload/payload-types';
@@ -7,7 +5,7 @@ import { getMediaUrl } from '@/lib/utilities/getMediaUrl';
 import { cn } from '@/lib/utilities/ui';
 
 type Props = {
-	resource?: MediaType | string | null;
+	resource?: MediaType | number;
 	alt?: string;
 	className?: string;
 	fill?: boolean;
@@ -40,7 +38,7 @@ export function Media({
 		finalWidth = width || resource.width || undefined;
 		finalHeight = height || resource.height || undefined;
 	} else {
-		src = getMediaUrl(resource);
+		src = '';
 	}
 
 	return (

@@ -8,6 +8,5 @@ export function processBlockContent(blocks: Blocks | null | undefined): Blocks |
 	const processed = { ...blocks };
 
 	for (const blockName of blocks) {
-		let result = blocks[blockName];
 	}
 }

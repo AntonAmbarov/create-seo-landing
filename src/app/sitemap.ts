@@ -5,7 +5,7 @@ import { getServerSideURL } from '@/lib/utilities/getURL';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const payload = await getPayload({ config });
-	const posts = await payload.find({
+	const pages = await payload.find({
 		collection: 'pages',
 		limit: 0,
 		where: {},
@@ -13,8 +13,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	const url = getServerSideURL();
 
+	const validURLs = pages.docs.filter(({ slug, noindex, _status }) => {
+		if (!slug || noindex || _status !== 'published') return false;
+		return true;
+	});
+
+	console.log(validURLs);
+
 	return [
-		...posts.docs.map(
+		...validURLs.map(
 			({ slug, updatedAt }: { slug: string | null | undefined; updatedAt: string }) => ({
 				url: `${url}/${slug}`,
 				lastModified: new Date(updatedAt),
