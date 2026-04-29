@@ -1,11 +1,10 @@
 import type { CollectionConfig } from 'payload';
 
-import { authenticated } from '../../../access/authenticated';
-import { authenticatedOrPublished } from '../../../access/authenticatedOrPublished';
+import { authenticated } from '@/access/authenticated';
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
 import { slugField } from 'payload';
-import { populatePublishedAt } from '../../../lib/hooks/populatePublishedAt';
+import { populatePublishedAt } from '@/lib/hooks/populatePublishedAt';
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage';
-import { HeroConfig } from '@/payload/blocks/hero.config';
 
 import {
 	MetaDescriptionField,
@@ -15,6 +14,7 @@ import {
 	PreviewField,
 } from '@payloadcms/plugin-seo/fields';
 import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath';
+import { FormBlock, HeroConfig } from '@/payload/blocks';
 
 export const Pages: CollectionConfig<'pages'> = {
 	slug: 'pages',
@@ -60,7 +60,7 @@ export const Pages: CollectionConfig<'pages'> = {
 			tabs: [
 				{
 					label: 'Content',
-					fields: [{ name: 'blocks', type: 'blocks', blocks: [HeroConfig] }],
+					fields: [{ name: 'blocks', type: 'blocks', blocks: [HeroConfig, FormBlock] }],
 				},
 				{
 					name: 'meta',

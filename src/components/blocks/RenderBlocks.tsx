@@ -1,9 +1,17 @@
 import { Page } from '../../payload/payload-types';
 import { Hero } from '@/components/blocks/Hero';
+import { FormBlock } from './form/Form';
+import { ComponentType } from 'react';
+import { cn } from '@/lib/utilities/ui';
 
-const blockComponents = {
+type Block = NonNullable<Page['blocks']>[number];
+
+const blockComponents: {
+	[K in Block['blockType']]: ComponentType<Extract<Block, { blockType: K }>>;
+} = {
 	hero: Hero,
-} as const;
+	formBlock: FormBlock,
+};
 
 type BlockType = keyof typeof blockComponents;
 
@@ -19,18 +27,16 @@ export function RenderBlocks({ blocks }: Props) {
 	return (
 		<>
 			{blocks.map((block, index) => {
-				const BlockComponent = blockComponents[block.blockType as BlockType];
+				const BlockComponent = blockComponents[block.blockType as BlockType] as ComponentType<
+					typeof block
+				>;
 
 				if (!BlockComponent) {
 					console.warn(`The component for the type block was not found.: ${block.blockType}`);
 					return null;
 				}
 
-				return (
-					<section key={block.id || index} className="my-16 first:mt-0 last:mb-0">
-						<BlockComponent {...block} />
-					</section>
-				);
+				return <BlockComponent key={block.id || index} {...block} />;
 			})}
 		</>
 	);
