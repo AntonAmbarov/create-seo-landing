@@ -5,6 +5,7 @@ import type { HeroBlock } from '@/payload/payload-types';
 import { cn } from '@/lib/utilities/ui';
 import { contentRender } from '@/lib/utilities/content/contentRender';
 import { getVariables } from '@/lib/queries/getVariables';
+import { Container } from '@/components/layouts/Container';
 
 export async function Hero({
 	title,
@@ -19,8 +20,8 @@ export async function Hero({
 	const variables = (await getVariables()).variables;
 
 	return (
-		<section className={cn('bg-background relative overflow-hidden py-16 md:py-24')}>
-			<div className="container mx-auto px-6">
+		<section className={cn('bg-background relative overflow-hidden py-12 md:py-24')}>
+			<Container width="wide">
 				<div className={cn('grid grid-cols-1 items-center gap-12 lg:grid-cols-2')}>
 					<div className={cn('space-y-8')}>
 						<div className="space-y-4">
@@ -73,7 +74,7 @@ export async function Hero({
 						</div>
 					)}
 				</div>
-			</div>
+			</Container>
 		</section>
 	);
 }

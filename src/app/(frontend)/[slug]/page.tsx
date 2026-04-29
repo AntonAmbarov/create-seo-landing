@@ -57,12 +57,12 @@ export default async function Page({ params: paramsPromise }: Props) {
 	}
 
 	return (
-		<div className="pb-24 pt-16">
+		<>
 			<RedirectsHandler disableNotFound url={url} />
 
 			{draft && <LivePreviewListener />}
 
 			<RenderBlocks blocks={page.blocks} />
-		</div>
+		</>
 	);
 }

@@ -5,7 +5,8 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FieldsType } from './types';
 import { fieldsComponents } from './Fields';
 import { Button } from '@/components/ui/button';
-import { number } from 'zod';
+import { Container } from '@/components/layouts/Container';
+import { cn } from '@/lib/utilities/ui';
 
 async function formAction(data: FieldsType): Promise<any> {
 	console.log(data);
@@ -31,20 +32,22 @@ export function FormBlock({ form }: FormBlockType) {
 	console.log('FormBlock');
 
 	return (
-		<section>
-			<h2>{title}</h2>
-			<FormProvider {...methods}>
-				<form onSubmit={methods.handleSubmit(handler)}>
-					{fields.map((field, index) => {
-						console.log('Получаем поле: ', field);
+		<Container width="narrow" className={cn('bg-green-700')}>
+			<div className={cn('bg-amber-800')}>
+				<h2>{title}</h2>
+				<FormProvider {...methods}>
+					<form onSubmit={methods.handleSubmit(handler)}>
+						{fields.map((field, index) => {
+							console.log('Получаем поле: ', field);
 
-						const FieldComponent = fieldsComponents[field.blockType];
-						if (!FieldComponent) return null;
-						return <FieldComponent key={index} field={field} />;
-					})}
-					<Button>{submitButtonLabel}</Button>
-				</form>
-			</FormProvider>
-		</section>
+							const FieldComponent = fieldsComponents[field.blockType];
+							if (!FieldComponent) return null;
+							return <FieldComponent key={index} field={field} />;
+						})}
+						<Button>{submitButtonLabel}</Button>
+					</form>
+				</FormProvider>
+			</div>
+		</Container>
 	);
 }
