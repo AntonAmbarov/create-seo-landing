@@ -18,8 +18,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		return true;
 	});
 
-	console.log(validURLs);
-
 	return [
 		...validURLs.map(
 			({ slug, updatedAt }: { slug: string | null | undefined; updatedAt: string }) => ({
