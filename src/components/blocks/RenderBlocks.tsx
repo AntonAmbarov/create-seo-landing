@@ -1,8 +1,7 @@
 import { Page } from '../../payload/payload-types';
 import { Hero } from '@/components/blocks/Hero';
-import { FormBlock } from './form/Form';
 import { ComponentType } from 'react';
-import { cn } from '@/lib/utilities/ui';
+import { FormBlock } from './FormBlock';
 
 type Block = NonNullable<Page['blocks']>[number];
 

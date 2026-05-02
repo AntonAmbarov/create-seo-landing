@@ -1,10 +1,8 @@
-import { getPayload } from 'payload';
-
-import configPromise from '@/payload/config';
 import type { Page } from '@/payload/payload-types';
+import { getPayloadClient } from '../utilities/getPayloadClient';
 
 export const queryPages = async (): Promise<Pick<Page, 'id' | 'title' | 'slug'>[]> => {
-	const payload = await getPayload({ config: configPromise });
+	const payload = await getPayloadClient();
 
 	const pages = await payload.find({
 		collection: 'pages',

@@ -5,7 +5,7 @@ import type { HeroBlock } from '@/payload/payload-types';
 import { cn } from '@/lib/utilities/ui';
 import { contentRender } from '@/lib/utilities/content/contentRender';
 import { getVariables } from '@/lib/queries/getVariables';
-import { Container } from '@/components/layouts/Container';
+import { Container } from '@/components/common/Container';
 
 export async function Hero({
 	title,

@@ -11,3 +11,4 @@ export type CheckboxFieldType = Extract<FieldsType, { blockType: 'checkbox' }>;
 export type SelectFieldType = Extract<FieldsType, { blockType: 'select' }>;
 export type CountryFieldType = Extract<FieldsType, { blockType: 'country' }>;
 export type StateFieldType = Extract<FieldsType, { blockType: 'state' }>;
+export type FormDataType = Record<string, string | boolean | number>;

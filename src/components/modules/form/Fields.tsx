@@ -4,14 +4,13 @@ import { Field, FieldError, FieldLabel } from '../../ui/field';
 import { Input } from '../../ui/input';
 import { useFormContext } from 'react-hook-form';
 import { Textarea } from '@/components/ui/textarea';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
 	BlockType,
 	CheckboxFieldType,
 	CountryFieldType,
 	EmailFieldType,
-	FieldsType,
 	MessageFieldType,
 	NumberFieldType,
 	SelectFieldType,
@@ -19,7 +18,6 @@ import {
 	TextareaFieldType,
 	TextFieldType,
 } from './types';
-import { keyof } from 'zod';
 
 function FieldWrapper({
 	children,
