@@ -105,11 +105,13 @@ export interface Config {
     header: Header;
     footer: Footer;
     sitevariables: Sitevariable;
+    contacts: Contact;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     sitevariables: SitevariablesSelect<false> | SitevariablesSelect<true>;
+    contacts: ContactsSelect<false> | ContactsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -152,7 +154,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  blocks?: (HeroBlock | FormBlock)[] | null;
+  blocks?: (HeroBlock | ContactSectionBlock)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -282,14 +284,15 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock".
+ * via the `definition` "ContactSectionBlock".
  */
-export interface FormBlock {
+export interface ContactSectionBlock {
+  title: string;
+  text: string;
   form: number | Form;
-  enableIntro?: boolean | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'formBlock';
+  blockType: 'contactSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -813,7 +816,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
       };
   meta?:
     | T
@@ -862,11 +865,12 @@ export interface HeroBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock_select".
+ * via the `definition` "ContactSectionBlock_select".
  */
-export interface FormBlockSelect<T extends boolean = true> {
+export interface ContactSectionBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
   form?: T;
-  enableIntro?: T;
   id?: T;
   blockName?: T;
 }
@@ -1343,6 +1347,18 @@ export interface Sitevariable {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contacts".
+ */
+export interface Contact {
+  id: number;
+  phone?: number | null;
+  email?: string | null;
+  address?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1397,6 +1413,18 @@ export interface SitevariablesSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contacts_select".
+ */
+export interface ContactsSelect<T extends boolean = true> {
+  phone?: T;
+  email?: T;
+  address?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

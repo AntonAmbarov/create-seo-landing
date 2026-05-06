@@ -18,6 +18,7 @@ import {
 	TextareaFieldType,
 	TextFieldType,
 } from './types';
+import { cn } from '@/lib/utilities/ui';
 
 function FieldWrapper({
 	children,
@@ -29,7 +30,7 @@ function FieldWrapper({
 	className?: string;
 }) {
 	return (
-		<div className={className} style={{ width: width ? `${width}%` : '100%' }}>
+		<div className={cn(className)} style={{ width: width ? `${width}%` : '100%' }}>
 			{children}
 		</div>
 	);
@@ -55,6 +56,7 @@ function TextField({ field }: { field: TextFieldType }) {
 					{...register(`${field.name}`, {
 						required: field.required ? `${field.label} is required` : false,
 					})}
+					className={cn('h-11')}
 				/>
 				{error && <FieldError>{error.message as string}</FieldError>}
 			</Field>
@@ -79,7 +81,7 @@ function TextareaField({ field }: { field: TextareaFieldType }) {
 					id={field.name}
 					required={!!field.required}
 					defaultValue={field.defaultValue || undefined}
-					rows={4}
+					rows={5}
 					{...register(field.name, {
 						required: field.required ? `${field.label} is required` : false,
 					})}
@@ -112,6 +114,7 @@ function NumberField({ field }: { field: NumberFieldType }) {
 						required: field.required ? `${field.label} is required` : false,
 						valueAsNumber: true,
 					})}
+					className={cn('h-11')}
 				/>
 				{error && <FieldError>{error.message as string}</FieldError>}
 			</Field>
@@ -144,6 +147,7 @@ function EmailField({ field }: { field: EmailFieldType }) {
 							message: 'Please enter a valid email address',
 						},
 					})}
+					className={cn('h-11')}
 				/>
 				{error && <FieldError>{error.message as string}</FieldError>}
 			</Field>

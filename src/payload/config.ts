@@ -15,6 +15,7 @@ import { getServerSideURL } from '@/lib/utilities/getURL';
 import { Header } from './globals/Header';
 import { Footer } from './globals/Footer';
 import { SiteVariables } from './globals/SiteVariables';
+import { Contacts } from './globals/Contacts';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -65,7 +66,7 @@ export default buildConfig({
 	}),
 	collections: [Pages, Posts, Media, Categories, Users],
 	cors: [getServerSideURL()].filter(Boolean),
-	globals: [Header, Footer, SiteVariables],
+	globals: [Header, Footer, SiteVariables, Contacts],
 	plugins,
 	secret: process.env.PAYLOAD_SECRET,
 	sharp,

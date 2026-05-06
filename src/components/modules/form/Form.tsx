@@ -6,6 +6,7 @@ import { FormDataType } from './types';
 import { fieldsComponents } from './Fields';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { cn } from '@/lib/utilities/ui';
 
 interface FormComponentProps {
 	form: FormType;
@@ -15,7 +16,7 @@ interface FormComponentProps {
 export function FormComponent({ form, action }: FormComponentProps) {
 	if (typeof form === 'number') return null;
 
-	const { fields, title, submitButtonLabel } = form;
+	const { fields, submitButtonLabel } = form;
 
 	if (!fields) return null;
 
@@ -28,21 +29,25 @@ export function FormComponent({ form, action }: FormComponentProps) {
 	};
 
 	return (
-		<>
-			<h2>{title}</h2>
-			<FormProvider {...methods}>
-				<form onSubmit={methods.handleSubmit(onSubmit)}>
+		<FormProvider {...methods}>
+			<form onSubmit={methods.handleSubmit(onSubmit)}>
+				<div className={cn('space-y-6')}>
 					{fields.map((field, index) => {
 						const FieldComponent = fieldsComponents[field.blockType];
 						if (!FieldComponent) return null;
 						return <FieldComponent key={index} field={field} />;
 					})}
-					<Button type="submit" disabled={isSubmitting}>
+					<Button
+						type="submit"
+						disabled={isSubmitting}
+						size="lg"
+						className={cn('w-full sm:w-auto')}
+					>
 						{isSubmitting && <Spinner data-icon="inline-start" />}
 						{submitButtonLabel}
 					</Button>
-				</form>
-			</FormProvider>
-		</>
+				</div>
+			</form>
+		</FormProvider>
 	);
 }

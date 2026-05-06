@@ -1,7 +1,7 @@
 import { Page } from '../../payload/payload-types';
 import { Hero } from '@/components/blocks/Hero';
 import { ComponentType } from 'react';
-import { FormBlock } from './FormBlock';
+import { ContactSection } from './ContactSection';
 
 type Block = NonNullable<Page['blocks']>[number];
 
@@ -9,7 +9,7 @@ const blockComponents: {
 	[K in Block['blockType']]: ComponentType<Extract<Block, { blockType: K }>>;
 } = {
 	hero: Hero,
-	formBlock: FormBlock,
+	contactSection: ContactSection,
 };
 
 type BlockType = keyof typeof blockComponents;

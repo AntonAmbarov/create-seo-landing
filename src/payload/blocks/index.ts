@@ -1,2 +1,2 @@
-export * from './form.config';
+export * from './contactSection.config';
 export * from './hero.config';

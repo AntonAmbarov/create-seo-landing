@@ -14,7 +14,7 @@ import {
 	PreviewField,
 } from '@payloadcms/plugin-seo/fields';
 import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath';
-import { FormBlock, HeroConfig } from '@/payload/blocks';
+import { ContactSection, HeroConfig } from '@/payload/blocks';
 
 export const Pages: CollectionConfig<'pages'> = {
 	slug: 'pages',
@@ -60,7 +60,7 @@ export const Pages: CollectionConfig<'pages'> = {
 			tabs: [
 				{
 					label: 'Content',
-					fields: [{ name: 'blocks', type: 'blocks', blocks: [HeroConfig, FormBlock] }],
+					fields: [{ name: 'blocks', type: 'blocks', blocks: [HeroConfig, ContactSection] }],
 				},
 				{
 					name: 'meta',
