@@ -6,6 +6,7 @@ import { cn } from '@/lib/utilities/ui';
 import { contentRender } from '@/lib/utilities/content/contentRender';
 import { getVariables } from '@/lib/queries/getVariables';
 import { Container } from '@/components/common/Container';
+import { HTag } from '../common/Htag';
 
 export async function Hero({
 	title,
@@ -25,9 +26,7 @@ export async function Hero({
 				<div className={cn('grid grid-cols-1 items-center gap-12 lg:grid-cols-2')}>
 					<div className={cn('space-y-8')}>
 						<div className="space-y-4">
-							<h1 className="text-foreground text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-								{contentRender(title, { variables, addNofollow: true })}
-							</h1>
+							<HTag level={1}>{contentRender(title, { variables, addNofollow: true })}</HTag>
 
 							{description && (
 								<div className="text-muted-foreground max-w-2xl text-xl">

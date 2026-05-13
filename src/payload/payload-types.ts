@@ -154,7 +154,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  blocks?: (HeroBlock | ContactSectionBlock)[] | null;
+  blocks?: (HeroBlock | ContactSectionBlock | FeautersBlock)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -467,6 +467,23 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeautersBlock".
+ */
+export interface FeautersBlock {
+  title: string;
+  description?: string | null;
+  features: {
+    title: string;
+    description: string;
+    icon?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'feauters';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -817,6 +834,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         hero?: T | HeroBlockSelect<T>;
         contactSection?: T | ContactSectionBlockSelect<T>;
+        feauters?: T | FeautersBlockSelect<T>;
       };
   meta?:
     | T
@@ -871,6 +889,24 @@ export interface ContactSectionBlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
   form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeautersBlock_select".
+ */
+export interface FeautersBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        icon?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
