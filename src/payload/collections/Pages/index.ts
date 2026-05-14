@@ -16,6 +16,7 @@ import {
 import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath';
 import { ContactSection, HeroConfig } from '@/payload/blocks';
 import { FeautersConfig } from '@/payload/blocks/feauters.config';
+import { CTAConfig } from '@/payload/blocks/cta.config';
 
 export const Pages: CollectionConfig<'pages'> = {
 	slug: 'pages',
@@ -65,7 +66,7 @@ export const Pages: CollectionConfig<'pages'> = {
 						{
 							name: 'blocks',
 							type: 'blocks',
-							blocks: [HeroConfig, ContactSection, FeautersConfig],
+							blocks: [HeroConfig, ContactSection, FeautersConfig, CTAConfig],
 						},
 					],
 				},

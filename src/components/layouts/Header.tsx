@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import type { Header as HeaderType } from '@/payload/payload-types';
+import { Logo } from '../common/Logo/Logo';
 
 interface HeaderProps {
 	data: HeaderType;
@@ -12,21 +13,21 @@ export function Header({ data }: HeaderProps) {
 	const { navItems, showCta, ctaLabel, ctaLink } = data;
 
 	return (
-		<header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+		<header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b backdrop-blur">
 			<div className="container mx-auto px-6">
 				<div className="flex h-16 items-center justify-between">
 					<Link href="/" className="flex items-center gap-2">
-						<div className="font-bold text-xl tracking-tight">SEO Landing</div>
+						<Logo />
 					</Link>
 
-					<nav className="hidden md:flex items-center gap-8">
+					<nav className="hidden items-center gap-8 md:flex">
 						{navItems?.map((item, index) => (
 							<Link
 								key={index}
 								href={item.link}
 								target={item.isExternal ? '_blank' : undefined}
 								rel={item.isExternal ? 'noopener noreferrer' : undefined}
-								className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+								className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
 							>
 								{item.label}
 							</Link>

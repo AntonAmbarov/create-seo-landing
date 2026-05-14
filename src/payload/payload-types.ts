@@ -154,7 +154,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  blocks?: (HeroBlock | ContactSectionBlock | FeautersBlock)[] | null;
+  blocks?: (HeroBlock | ContactSectionBlock | FeautersBlock | CTABlock)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -484,6 +484,19 @@ export interface FeautersBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'feauters';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock".
+ */
+export interface CTABlock {
+  title: string;
+  description?: string | null;
+  button?: string | null;
+  href?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -835,6 +848,7 @@ export interface PagesSelect<T extends boolean = true> {
         hero?: T | HeroBlockSelect<T>;
         contactSection?: T | ContactSectionBlockSelect<T>;
         feauters?: T | FeautersBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
       };
   meta?:
     | T
@@ -907,6 +921,18 @@ export interface FeautersBlockSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock_select".
+ */
+export interface CTABlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  button?: T;
+  href?: T;
   id?: T;
   blockName?: T;
 }
