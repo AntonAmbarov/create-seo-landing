@@ -70,9 +70,11 @@ Open http://localhost:3000/admin to access the admin panel.
 
 - Advanced SEO blocks (Stats, Trust Bar, Comparison Table, Logos, Countdown, FAQ with schema)
 - Built-in form handling with server actions and validation
+- Page Templates with smart block inheritance — create reusable page structures where editing a template updates all derived pages, except manually overridden blocks.
 - A/B testing support for individual blocks
 - Enhanced Live Preview and on-demand revalidation
 - Multi-language (i18n) support
+- Bulk landing page creation and editing via JSON import/export
 - Improved documentation + video guides
 
 ### Phase 3 — Maturity (Future)
