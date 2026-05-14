@@ -5,6 +5,9 @@ import { ContactSection } from './ContactSection';
 import { Feauters } from './Feauters';
 import { CTA } from './Cta';
 import { Pricing } from './Pricing';
+import { Team } from './Team';
+import { Testimonials } from './Testimonials';
+import { Faq } from './Faq';
 
 type Block = NonNullable<Page['blocks']>[number];
 
@@ -16,6 +19,9 @@ const blockComponents: {
 	feauters: Feauters,
 	cta: CTA,
 	pricing: Pricing,
+	team: Team,
+	testimonials: Testimonials,
+	faq: Faq,
 };
 
 type BlockType = keyof typeof blockComponents;

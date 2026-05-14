@@ -20,6 +20,7 @@ import { CTAConfig } from '@/payload/blocks/cta.config';
 import { PricingConfig } from '@/payload/blocks/pricing.config';
 import { TestimonialsConfig } from '@/payload/blocks/testimonials.config';
 import { TeamConfig } from '@/payload/blocks/team.config';
+import { FaqConfig } from '@/payload/blocks/faq.config';
 
 export const Pages: CollectionConfig<'pages'> = {
 	slug: 'pages',
@@ -77,6 +78,7 @@ export const Pages: CollectionConfig<'pages'> = {
 								PricingConfig,
 								TestimonialsConfig,
 								TeamConfig,
+								FaqConfig,
 							],
 						},
 					],

@@ -155,7 +155,16 @@ export interface Page {
   id: number;
   title: string;
   blocks?:
-    | (HeroBlock | ContactSectionBlock | FeautersBlock | CTABlock | PricingBlock | TestimonialsBlock | TeamBlock)[]
+    | (
+        | HeroBlock
+        | ContactSectionBlock
+        | FeautersBlock
+        | CTABlock
+        | PricingBlock
+        | TestimonialsBlock
+        | TeamBlock
+        | FaqBlock
+      )[]
     | null;
   meta?: {
     title?: string | null;
@@ -591,6 +600,29 @@ export interface TeamBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock".
+ */
+export interface FaqBlock {
+  title: string;
+  description?: string | null;
+  items: {
+    question: string;
+    /**
+     * Answer to the question
+     */
+    answer: string;
+    id?: string | null;
+  }[];
+  /**
+   * Which accordion item should be open by default (0 = first item)
+   */
+  defaultOpenIndex?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -943,6 +975,7 @@ export interface PagesSelect<T extends boolean = true> {
         pricing?: T | PricingBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
+        faq?: T | FaqBlockSelect<T>;
       };
   meta?:
     | T
@@ -1099,6 +1132,24 @@ export interface TeamBlockSelect<T extends boolean = true> {
         label?: T;
         link?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock_select".
+ */
+export interface FaqBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  defaultOpenIndex?: T;
   id?: T;
   blockName?: T;
 }
