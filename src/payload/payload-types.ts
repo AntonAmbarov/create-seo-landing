@@ -154,7 +154,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  blocks?: (HeroBlock | ContactSectionBlock | FeautersBlock | CTABlock)[] | null;
+  blocks?: (HeroBlock | ContactSectionBlock | FeautersBlock | CTABlock | PricingBlock)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -497,6 +497,33 @@ export interface CTABlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingBlock".
+ */
+export interface PricingBlock {
+  title: string;
+  description?: string | null;
+  plans: {
+    name: string;
+    price: number;
+    description: string;
+    /**
+     * Highlights this plan with a badge and primary styling
+     */
+    isPopular?: boolean | null;
+    buttonText: string;
+    buttonLink: string;
+    features: {
+      feature: string;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricing';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -849,6 +876,7 @@ export interface PagesSelect<T extends boolean = true> {
         contactSection?: T | ContactSectionBlockSelect<T>;
         feauters?: T | FeautersBlockSelect<T>;
         cta?: T | CTABlockSelect<T>;
+        pricing?: T | PricingBlockSelect<T>;
       };
   meta?:
     | T
@@ -933,6 +961,33 @@ export interface CTABlockSelect<T extends boolean = true> {
   description?: T;
   button?: T;
   href?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingBlock_select".
+ */
+export interface PricingBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  plans?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        description?: T;
+        isPopular?: T;
+        buttonText?: T;
+        buttonLink?: T;
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

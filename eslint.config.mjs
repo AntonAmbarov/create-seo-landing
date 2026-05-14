@@ -1,7 +1,7 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
-import { error } from 'console';
+import importPlugin from 'eslint-plugin-import';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,10 +16,12 @@ const eslintConfig = [
 	{
 		plugins: {
 			prettier: prettierPlugin,
+			import: importPlugin,
 		},
 	},
 	{
 		rules: {
+			'import/no-relative-parent-imports': 'error',
 			'@typescript-eslint/ban-ts-comment': 'warn',
 			'@typescript-eslint/no-empty-object-type': 'warn',
 			'@typescript-eslint/no-explicit-any': 'warn',

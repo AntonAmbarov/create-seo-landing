@@ -4,6 +4,7 @@ import { ComponentType } from 'react';
 import { ContactSection } from './ContactSection';
 import { Feauters } from './Feauters';
 import { CTA } from './Cta';
+import { Pricing } from './Pricing';
 
 type Block = NonNullable<Page['blocks']>[number];
 
@@ -14,6 +15,7 @@ const blockComponents: {
 	contactSection: ContactSection,
 	feauters: Feauters,
 	cta: CTA,
+	pricing: Pricing,
 };
 
 type BlockType = keyof typeof blockComponents;
