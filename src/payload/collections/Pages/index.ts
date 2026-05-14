@@ -18,6 +18,8 @@ import { ContactSection, HeroConfig } from '@/payload/blocks';
 import { FeautersConfig } from '@/payload/blocks/feauters.config';
 import { CTAConfig } from '@/payload/blocks/cta.config';
 import { PricingConfig } from '@/payload/blocks/pricing.config';
+import { TestimonialsConfig } from '@/payload/blocks/testimonials.config';
+import { TeamConfig } from '@/payload/blocks/team.config';
 
 export const Pages: CollectionConfig<'pages'> = {
 	slug: 'pages',
@@ -67,7 +69,15 @@ export const Pages: CollectionConfig<'pages'> = {
 						{
 							name: 'blocks',
 							type: 'blocks',
-							blocks: [HeroConfig, ContactSection, FeautersConfig, CTAConfig, PricingConfig],
+							blocks: [
+								HeroConfig,
+								ContactSection,
+								FeautersConfig,
+								CTAConfig,
+								PricingConfig,
+								TestimonialsConfig,
+								TeamConfig,
+							],
 						},
 					],
 				},

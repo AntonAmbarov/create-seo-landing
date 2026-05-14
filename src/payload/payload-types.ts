@@ -154,7 +154,9 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  blocks?: (HeroBlock | ContactSectionBlock | FeautersBlock | CTABlock | PricingBlock)[] | null;
+  blocks?:
+    | (HeroBlock | ContactSectionBlock | FeautersBlock | CTABlock | PricingBlock | TestimonialsBlock | TeamBlock)[]
+    | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -527,6 +529,68 @@ export interface PricingBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  title: string;
+  description?: string | null;
+  testimonials: {
+    name: string;
+    role: string;
+    /**
+     * Profile picture of the person
+     */
+    avatar: number | Media;
+    /**
+     * What the person says about your product
+     */
+    testimonial: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  /**
+   * Small uppercase text above the title
+   */
+  eyebrow?: string | null;
+  title: string;
+  /**
+   * Supporting text below the title
+   */
+  description?: string | null;
+  members: {
+    name: string;
+    title: string;
+    /**
+     * Short biography or background
+     */
+    bio: string;
+    /**
+     * Square photo of the team member
+     */
+    image: number | Media;
+    id?: string | null;
+  }[];
+  /**
+   * Optional button to link to careers page
+   */
+  joinButton?: {
+    label?: string | null;
+    link?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'team';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -877,6 +941,8 @@ export interface PagesSelect<T extends boolean = true> {
         feauters?: T | FeautersBlockSelect<T>;
         cta?: T | CTABlockSelect<T>;
         pricing?: T | PricingBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
       };
   meta?:
     | T
@@ -987,6 +1053,51 @@ export interface PricingBlockSelect<T extends boolean = true> {
               id?: T;
             };
         id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  testimonials?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        avatar?: T;
+        testimonial?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  description?: T;
+  members?:
+    | T
+    | {
+        name?: T;
+        title?: T;
+        bio?: T;
+        image?: T;
+        id?: T;
+      };
+  joinButton?:
+    | T
+    | {
+        label?: T;
+        link?: T;
       };
   id?: T;
   blockName?: T;
