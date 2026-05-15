@@ -4,6 +4,16 @@ A free, open-source landing page builder focused on **SEO** and ease of use for 
 
 Built with **Next.js**, **Payload CMS**, **TypeScript**, **Tailwind CSS**, and **shadcn/ui**.
 
+## Demo
+https://create-seo-landing.vercel.app/
+
+https://create-seo-landing.vercel.app/admin/
+
+```
+login: demo@demo.com
+pass: Demopassword
+```
+
 ## Philosophy
 
 This project allows marketing and SEO teams to quickly create high-performing, SEO-optimized landing pages without deep developer involvement.
