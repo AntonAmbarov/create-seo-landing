@@ -1,0 +1,27 @@
+import type { Payload } from 'payload';
+import { validateInput } from './utilites';
+import { Page } from '@/payload/payload-types';
+
+export async function importLanding(rawJson: unknown, payload: Payload): Promise<Page> {
+	const data = validateInput(rawJson);
+
+	const existingPage = await payload.find({
+		collection: 'pages',
+		where: { slug: { equals: data.slug } },
+		limit: 1,
+	});
+
+	if (existingPage.totalDocs > 0) {
+		throw new Error(`Page with slug "${data.slug}" already exists`);
+	}
+
+	// what to do with images? Need to resolve somehow
+	// make a block resolve
+
+	const page = await payload.create({
+		collection: 'pages',
+		data: { title: data.title, slug: data.slug, _status: 'draft' },
+	});
+
+	return page;
+}

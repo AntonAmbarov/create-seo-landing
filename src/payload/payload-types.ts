@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    'landing-import': LandingImport;
     media: Media;
     categories: Category;
     users: User;
@@ -85,6 +86,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'landing-import': LandingImportSelect<false> | LandingImportSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -727,6 +729,30 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Create landing pages by pasting a JSON object.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-import".
+ */
+export interface LandingImport {
+  id: number;
+  /**
+   * Описание блоков
+   */
+  json:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  result?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -892,6 +918,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'landing-import';
+        value: number | LandingImport;
       } | null)
     | ({
         relationTo: 'media';
@@ -1185,6 +1215,16 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-import_select".
+ */
+export interface LandingImportSelect<T extends boolean = true> {
+  json?: T;
+  result?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
