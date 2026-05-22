@@ -8,6 +8,7 @@ import { Pricing } from './Pricing';
 import { Team } from './Team';
 import { Testimonials } from './Testimonials';
 import { Faq } from './Faq';
+import { Blocks } from '@/types/blocks';
 
 type Block = NonNullable<Page['blocks']>[number];
 
@@ -27,7 +28,7 @@ const blockComponents: {
 type BlockType = keyof typeof blockComponents;
 
 type Props = {
-	blocks: Page['blocks'] | null | undefined;
+	blocks: Blocks;
 };
 
 export function RenderBlocks({ blocks }: Props) {

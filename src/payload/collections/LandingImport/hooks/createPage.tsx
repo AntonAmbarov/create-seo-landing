@@ -10,16 +10,18 @@ export const createPage: CollectionAfterChangeHook<LandingImport> = async ({
 	if (operation !== 'create') return;
 
 	try {
-		await importLanding(doc.json, req.payload);
+		const items = Array.isArray(doc.json) ? doc.json : [doc.json];
+		const validItems = items.filter((item) => typeof item === 'object');
+
+		if (validItems.length === 0) {
+			throw new Error('No valid import data found');
+		}
+
+		const importPromises = validItems.map((item) => importLanding(item, req.payload));
+
+		await Promise.all(importPromises);
 	} catch (err: unknown) {
 		const message = err instanceof Error ? err.message : 'Unknown error';
-
-		await req.payload.update({
-			collection: 'landing-import',
-			id: doc.id,
-			data: {
-				result: message,
-			},
-		});
+		console.error(message);
 	}
 };

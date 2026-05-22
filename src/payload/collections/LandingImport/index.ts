@@ -1,27 +1,8 @@
-import { slugField, type CollectionConfig } from 'payload';
+import { type CollectionConfig } from 'payload';
 import { authenticated } from '@/access/authenticated';
 
-import { HeroConfig } from '@/payload/blocks/hero.config';
-import { ContactSection } from '@/payload/blocks/contactSection.config';
-import { FeautersConfig } from '@/payload/blocks/feauters.config';
-import { CTAConfig } from '@/payload/blocks/cta.config';
-import { PricingConfig } from '@/payload/blocks/pricing.config';
-import { TestimonialsConfig } from '@/payload/blocks/testimonials.config';
-import { TeamConfig } from '@/payload/blocks/team.config';
-import { FaqConfig } from '@/payload/blocks/faq.config';
 import { generateCheatsheet } from './generateCheatsheet';
 import { createPage } from './hooks/createPage';
-
-const ALL_BLOCKS = [
-	HeroConfig,
-	ContactSection,
-	FeautersConfig,
-	CTAConfig,
-	PricingConfig,
-	TestimonialsConfig,
-	TeamConfig,
-	FaqConfig,
-];
 
 export const LandingImport: CollectionConfig = {
 	slug: 'landing-import',
@@ -46,7 +27,7 @@ export const LandingImport: CollectionConfig = {
 			required: true,
 			label: 'Landing JSON',
 			admin: {
-				description: generateCheatsheet(ALL_BLOCKS),
+				description: generateCheatsheet(),
 			},
 		},
 		{

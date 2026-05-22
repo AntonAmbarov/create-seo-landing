@@ -15,12 +15,16 @@ export async function importLanding(rawJson: unknown, payload: Payload): Promise
 		throw new Error(`Page with slug "${data.slug}" already exists`);
 	}
 
-	// what to do with images? Need to resolve somehow
-	// make a block resolve
-
 	const page = await payload.create({
 		collection: 'pages',
-		data: { title: data.title, slug: data.slug, _status: 'draft' },
+		data: {
+			title: data.title,
+			slug: data.slug,
+			blocks: data.blocks,
+			meta: data.meta,
+			noindex: data.noindex,
+			_status: 'draft',
+		},
 	});
 
 	return page;
