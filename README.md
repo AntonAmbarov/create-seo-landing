@@ -75,10 +75,13 @@ Open http://localhost:3000/admin to access the admin panel.
 - [x] SEO foundations (metadata, schema.org, sitemap, Open Graph)
 - [x] Clean shadcn/ui + Tailwind styling
 - [x] PostgreSQL + Docker setup
+- [ ] Blog
+- [ ] Block options
 
 ### Phase 2 — Growth
 
 - [ ] Advanced SEO blocks (Stats, Trust Bar, Comparison Table, Logos, Countdown, FAQ with schema)
+- [ ] Custom HTML Block
 - [x] Built-in form handling with server actions and validation
 - [ ] Simple page templates 
 - [ ] A/B testing support for individual blocks
