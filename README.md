@@ -69,32 +69,33 @@ Open http://localhost:3000/admin to access the admin panel.
 
 ### Phase 1 — MVP (Current Focus)
 
-- Core set of high-conversion SEO blocks (Hero, Pricing, FAQ, Testimonials, CTA, Features)
-- Global variables & shortcodes system
-- Safe customization via `overrides/blocks/`
-- SEO foundations (metadata, schema.org, sitemap, Open Graph)
-- Clean shadcn/ui + Tailwind styling
-- PostgreSQL + Docker setup
+- [x] Core set of high-conversion SEO blocks (Hero, Pricing, FAQ, Testimonials, CTA, Features)
+- [x] Global variables & shortcodes system
+- [ ] Safe customization via `overrides/blocks/`
+- [x] SEO foundations (metadata, schema.org, sitemap, Open Graph)
+- [x] Clean shadcn/ui + Tailwind styling
+- [x] PostgreSQL + Docker setup
 
 ### Phase 2 — Growth
 
-- Advanced SEO blocks (Stats, Trust Bar, Comparison Table, Logos, Countdown, FAQ with schema)
-- Built-in form handling with server actions and validation
-- Page Templates with smart block inheritance — create reusable page structures where editing a template updates all derived pages, except manually overridden blocks.
-- A/B testing support for individual blocks
-- Enhanced Live Preview and on-demand revalidation
-- Multi-language (i18n) support
-- Bulk landing page creation and editing via JSON import/export
-- Improved documentation + video guides
+- [ ] Advanced SEO blocks (Stats, Trust Bar, Comparison Table, Logos, Countdown, FAQ with schema)
+- [x] Built-in form handling with server actions and validation
+- [ ] Simple page templates 
+- [ ] A/B testing support for individual blocks
+- [ ] Enhanced Live Preview and on-demand revalidation
+- [ ] Multi-language (i18n) support
+- [x] Bulk landing page creation and editing via JSON import/export
+- [ ] Improved documentation + video guides
 
 ### Phase 3 — Maturity (Future)
 
-- Reusable Widgets system
-- AI-assisted content generation for blocks
-- Analytics integration (GTM/GA4) through server components
-- Plugin system for community-contributed blocks
-- CLI improvements and template update mechanism
-- Comprehensive SEO toolkit (auto schema.org, keyword suggestions, etc.)
+- [ ] Reusable Widgets system
+- [ ] AI-assisted content generation for blocks
+- [ ] Analytics integration (GTM/GA4) through server components
+- [ ] Plugin system for community-contributed blocks
+- [ ] CLI improvements and template update mechanism
+- [ ] Comprehensive SEO toolkit (auto schema.org, keyword suggestions, etc.)
+- [ ] Page Templates with smart block inheritance — create reusable page structures where editing a template updates all derived pages, except manually overridden blocks
 
 ## Contributing
 
