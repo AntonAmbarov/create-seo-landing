@@ -7,8 +7,15 @@ import { notFound } from 'next/navigation';
 export async function generateMetadata(): Promise<Metadata> {
 	const homepage = await getHomepage();
 
+	if (homepage === null) {
+		return {
+			title: 'homepage',
+		};
+	}
+
 	return generateMeta({ doc: homepage });
 }
+
 export default async function Page() {
 	const homepage = await getHomepage();
 
