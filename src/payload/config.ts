@@ -17,6 +17,7 @@ import { Footer } from './globals/Footer';
 import { SiteVariables } from './globals/SiteVariables';
 import { Contacts } from './globals/Contacts';
 import { LandingImport } from './collections/LandingImport';
+import { Homepage } from './globals/Homepage';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -67,7 +68,7 @@ export default buildConfig({
 	}),
 	collections: [Pages, Posts, LandingImport, Media, Categories, Users],
 	cors: [getServerSideURL()].filter(Boolean),
-	globals: [Header, Footer, SiteVariables, Contacts],
+	globals: [Header, Footer, SiteVariables, Contacts, Homepage],
 	plugins,
 	secret: process.env.PAYLOAD_SECRET,
 	sharp,

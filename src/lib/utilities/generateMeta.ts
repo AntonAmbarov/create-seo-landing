@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import type { Media, Page, Post, Config } from '@/payload/payload-types';
+import type { Media, Page, Post, Config, Homepage } from '@/payload/payload-types';
 
 import { mergeOpenGraph } from './mergeOpenGraph';
 import { getServerSideURL } from './getURL';
@@ -19,7 +19,9 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 	return url;
 };
 
-export function generateMeta(args: { doc: Partial<Page> | Partial<Post> | null }): Metadata {
+export function generateMeta(args: {
+	doc: Partial<Page> | Partial<Post> | Partial<Homepage> | null;
+}): Metadata {
 	const { doc } = args;
 
 	if (!doc)

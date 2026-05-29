@@ -108,12 +108,14 @@ export interface Config {
     footer: Footer;
     sitevariables: Sitevariable;
     contacts: Contact;
+    homepage: Homepage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     sitevariables: SitevariablesSelect<false> | SitevariablesSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1715,6 +1717,41 @@ export interface Contact {
   createdAt?: string | null;
 }
 /**
+ * Home Page Settings
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  title: string;
+  slug?: string | null;
+  noindex?: boolean | null;
+  blocks?:
+    | (
+        | HeroBlock
+        | ContactSectionBlock
+        | FeautersBlock
+        | CTABlock
+        | PricingBlock
+        | TestimonialsBlock
+        | TeamBlock
+        | FaqBlock
+      )[]
+    | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    canonicalURL?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -1782,6 +1819,38 @@ export interface ContactsSelect<T extends boolean = true> {
   phone?: T;
   email?: T;
   address?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  noindex?: T;
+  blocks?:
+    | T
+    | {
+        hero?: T | HeroBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+        feauters?: T | FeautersBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
+        pricing?: T | PricingBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        faq?: T | FaqBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        canonicalURL?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

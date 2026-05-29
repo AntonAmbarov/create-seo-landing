@@ -42,7 +42,7 @@ export async function generateMetadata({ params: paramsPromise }: Props): Promis
 
 export default async function Page({ params: paramsPromise }: Props) {
 	const { isEnabled: draft } = await draftMode();
-	const { slug = 'home' } = await paramsPromise;
+	const { slug = '/' } = await paramsPromise;
 
 	const decodedSlug = decodeURIComponent(slug);
 	const url = '/' + decodedSlug;
