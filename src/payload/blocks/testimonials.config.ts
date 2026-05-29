@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { blockOptions } from '../fields/blockOptions';
 
 export const TestimonialsConfig: Block = {
 	slug: 'testimonials',
@@ -62,5 +63,6 @@ export const TestimonialsConfig: Block = {
 				},
 			],
 		},
+		blockOptions(),
 	],
 };

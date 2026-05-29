@@ -1,10 +1,12 @@
 import type { TestimonialsBlock } from '@/payload/payload-types';
 import { contentRender } from '@/lib/utilities/content/contentRender';
 import { getVariables } from '@/lib/queries/getVariables';
-import { Container } from '@/components/common/Container';
+import { Container } from '@/components/common/_Container';
 import { HTag } from '../common/Htag';
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
+import { getLayoutSettings } from '@/lib/layout/utils';
+import { LayoutWrapper } from '../common/LayoutWrapper';
 
 type Testimonial = TestimonialsBlock['testimonials'][number];
 
@@ -39,30 +41,34 @@ async function TestimonialCard({ name, role, avatar, testimonial }: Testimonial)
 	);
 }
 
-export async function Testimonials({ title, description, testimonials }: TestimonialsBlock) {
-	const variables = (await getVariables()).variables;
-
+export async function Testimonials({
+	title,
+	description,
+	testimonials,
+	layoutSettings,
+}: TestimonialsBlock) {
 	if (!testimonials?.length) return null;
 
-	return (
-		<section className="py-12 sm:py-20">
-			<Container width="wide">
-				<HTag
-					level={2}
-					className="text-center text-4xl font-medium tracking-[-0.04em] md:text-[2.75rem]"
-				>
-					{contentRender(title, { variables })}
-				</HTag>
-				<p className="text-muted-foreground mt-2.5 text-balance text-center text-lg tracking-normal sm:text-2xl">
-					{contentRender(description, { variables })}
-				</p>
+	const variables = (await getVariables()).variables;
+	const settings = getLayoutSettings(layoutSettings);
 
-				<div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-					{testimonials.map((testimonial, i) => (
-						<TestimonialCard key={i} {...testimonial} />
-					))}
-				</div>
-			</Container>
-		</section>
+	return (
+		<LayoutWrapper settings={settings}>
+			<HTag
+				level={2}
+				className="text-center text-4xl font-medium tracking-[-0.04em] md:text-[2.75rem]"
+			>
+				{contentRender(title, { variables })}
+			</HTag>
+			<p className="text-muted-foreground mt-2.5 text-balance text-center text-lg tracking-normal sm:text-2xl">
+				{contentRender(description, { variables })}
+			</p>
+
+			<div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{testimonials.map((testimonial, i) => (
+					<TestimonialCard key={i} {...testimonial} />
+				))}
+			</div>
+		</LayoutWrapper>
 	);
 }

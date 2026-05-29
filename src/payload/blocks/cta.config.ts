@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { blockOptions } from '../fields/blockOptions';
 
 export const CTAConfig: Block = {
 	slug: 'cta',
@@ -12,5 +13,6 @@ export const CTAConfig: Block = {
 		{ name: 'description', type: 'text', label: 'Section description' },
 		{ name: 'button', type: 'text', label: 'Text button' },
 		{ name: 'href', type: 'text', label: 'Link button' },
+		blockOptions(),
 	],
 };

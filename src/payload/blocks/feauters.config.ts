@@ -1,5 +1,6 @@
 import { Block } from 'payload';
 import { iconPickerField } from '../fields/iconPicker';
+import { blockOptions } from '../fields/blockOptions';
 
 export const FeautersConfig: Block = {
 	slug: 'feauters',
@@ -22,5 +23,6 @@ export const FeautersConfig: Block = {
 				iconPickerField(),
 			],
 		},
+		blockOptions(),
 	],
 };

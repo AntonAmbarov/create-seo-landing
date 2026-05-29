@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { blockOptions } from '../fields/blockOptions';
 
 export const ContactSection: Block = {
 	slug: 'contactSection',
@@ -19,5 +20,6 @@ export const ContactSection: Block = {
 			relationTo: 'forms',
 			required: true,
 		},
+		blockOptions(),
 	],
 };

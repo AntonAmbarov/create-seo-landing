@@ -2,7 +2,7 @@ import type { PricingBlock } from '@/payload/payload-types';
 import { cn } from '@/lib/utilities/ui';
 import { contentRender } from '@/lib/utilities/content/contentRender';
 import { getVariables } from '@/lib/queries/getVariables';
-import { Container } from '@/components/common/Container';
+import { Container } from '@/components/common/_Container';
 import { HTag } from '../common/Htag';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +10,8 @@ import { Separator } from '@/components/ui/separator';
 import { CircleCheck } from 'lucide-react';
 import Link from 'next/link';
 import { toHref } from '@/lib/utilities/toHref';
+import { getLayoutSettings } from '@/lib/layout/utils';
+import { LayoutWrapper } from '../common/LayoutWrapper';
 
 type Plan = PricingBlock['plans'][number];
 
@@ -53,28 +55,27 @@ async function PricingPlan({ plan }: { plan: Plan }) {
 	);
 }
 
-export async function Pricing({ title, description, plans }: PricingBlock) {
+export async function Pricing({ title, description, plans, layoutSettings }: PricingBlock) {
 	const variables = (await getVariables()).variables;
+	const settings = getLayoutSettings(layoutSettings);
 
 	return (
-		<section className="px-6 py-20">
-			<Container width="wide">
-				<HTag
-					level={2}
-					className="text-center text-4xl font-medium tracking-[-0.04em] sm:text-[2.75rem]"
-				>
-					{contentRender(title, { variables })}
-				</HTag>
-				<p className="text-muted-foreground mt-3 text-center text-xl -tracking-[0.01em] md:text-2xl">
-					{contentRender(description, { variables })}
-				</p>
+		<LayoutWrapper settings={settings}>
+			<HTag
+				level={2}
+				className="text-center text-4xl font-medium tracking-[-0.04em] sm:text-[2.75rem]"
+			>
+				{contentRender(title, { variables })}
+			</HTag>
+			<p className="text-muted-foreground mt-3 text-center text-xl -tracking-[0.01em] md:text-2xl">
+				{contentRender(description, { variables })}
+			</p>
 
-				<div className="max-w-(--breakpoint-lg) mx-auto mt-12 grid grid-cols-1 items-center gap-8 sm:mt-16 lg:grid-cols-3">
-					{plans.map((plan, i) => (
-						<PricingPlan key={i} plan={plan} />
-					))}
-				</div>
-			</Container>
-		</section>
+			<div className="max-w-(--breakpoint-lg) mx-auto mt-12 grid grid-cols-1 items-center gap-8 sm:mt-16 lg:grid-cols-3">
+				{plans.map((plan, i) => (
+					<PricingPlan key={i} plan={plan} />
+				))}
+			</div>
+		</LayoutWrapper>
 	);
 }

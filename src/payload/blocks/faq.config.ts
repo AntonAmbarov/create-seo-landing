@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { blockOptions } from '../fields/blockOptions';
 
 export const FaqConfig: Block = {
 	slug: 'faq',
@@ -55,5 +56,6 @@ export const FaqConfig: Block = {
 				description: 'Which accordion item should be open by default (0 = first item)',
 			},
 		},
+		blockOptions(),
 	],
 };

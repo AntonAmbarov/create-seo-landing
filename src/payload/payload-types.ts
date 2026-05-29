@@ -303,6 +303,7 @@ export interface ContactSectionBlock {
   title: string;
   text: string;
   form: number | Form;
+  layoutSettings?: LayoutSettings;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contactSection';
@@ -483,6 +484,18 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LayoutSettings".
+ */
+export interface LayoutSettings {
+  paddingTop?: ('none' | 'small' | 'medium' | 'large' | 'xlarge') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large' | 'xlarge') | null;
+  marginTop?: ('none' | 'small' | 'medium' | 'large' | 'xlarge') | null;
+  marginBottom?: ('none' | 'small' | 'medium' | 'large' | 'xlarge') | null;
+  width?: ('narrow' | 'normal' | 'wide' | 'full') | null;
+  background?: ('none' | 'light' | 'dark' | 'accent' | 'gradient') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FeautersBlock".
  */
 export interface FeautersBlock {
@@ -494,6 +507,7 @@ export interface FeautersBlock {
     icon?: string | null;
     id?: string | null;
   }[];
+  layoutSettings?: LayoutSettings;
   id?: string | null;
   blockName?: string | null;
   blockType: 'feauters';
@@ -507,6 +521,7 @@ export interface CTABlock {
   description?: string | null;
   button?: string | null;
   href?: string | null;
+  layoutSettings?: LayoutSettings;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -534,6 +549,7 @@ export interface PricingBlock {
     }[];
     id?: string | null;
   }[];
+  layoutSettings?: LayoutSettings;
   id?: string | null;
   blockName?: string | null;
   blockType: 'pricing';
@@ -558,6 +574,7 @@ export interface TestimonialsBlock {
     testimonial: string;
     id?: string | null;
   }[];
+  layoutSettings?: LayoutSettings;
   id?: string | null;
   blockName?: string | null;
   blockType: 'testimonials';
@@ -596,6 +613,7 @@ export interface TeamBlock {
     label?: string | null;
     link?: string | null;
   };
+  layoutSettings?: LayoutSettings;
   id?: string | null;
   blockName?: string | null;
   blockType: 'team';
@@ -619,6 +637,7 @@ export interface FaqBlock {
    * Which accordion item should be open by default (0 = first item)
    */
   defaultOpenIndex?: number | null;
+  layoutSettings?: LayoutSettings;
   id?: string | null;
   blockName?: string | null;
   blockType: 'faq';
@@ -1060,8 +1079,21 @@ export interface ContactSectionBlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
   form?: T;
+  layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LayoutSettings_select".
+ */
+export interface LayoutSettingsSelect<T extends boolean = true> {
+  paddingTop?: T;
+  paddingBottom?: T;
+  marginTop?: T;
+  marginBottom?: T;
+  width?: T;
+  background?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1078,6 +1110,7 @@ export interface FeautersBlockSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;
 }
@@ -1090,6 +1123,7 @@ export interface CTABlockSelect<T extends boolean = true> {
   description?: T;
   button?: T;
   href?: T;
+  layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;
 }
@@ -1117,6 +1151,7 @@ export interface PricingBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;
 }
@@ -1136,6 +1171,7 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
         testimonial?: T;
         id?: T;
       };
+  layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;
 }
@@ -1162,6 +1198,7 @@ export interface TeamBlockSelect<T extends boolean = true> {
         label?: T;
         link?: T;
       };
+  layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;
 }
@@ -1180,6 +1217,7 @@ export interface FaqBlockSelect<T extends boolean = true> {
         id?: T;
       };
   defaultOpenIndex?: T;
+  layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;
 }

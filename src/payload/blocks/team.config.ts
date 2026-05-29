@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { blockOptions } from '../fields/blockOptions';
 
 export const TeamConfig: Block = {
 	slug: 'team',
@@ -94,5 +95,6 @@ export const TeamConfig: Block = {
 				},
 			],
 		},
+		blockOptions(),
 	],
 };

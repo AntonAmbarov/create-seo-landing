@@ -15,5 +15,5 @@ const sizeMap: Record<HTagProps['level'], string> = {
 
 export const HTag = ({ level, children, className }: HTagProps) => {
 	const Tag = `h${level}` as const;
-	return <Tag className={cn('text-foreground', sizeMap[level], className)}>{children}</Tag>;
+	return <Tag className={cn(sizeMap[level], className)}>{children}</Tag>;
 };

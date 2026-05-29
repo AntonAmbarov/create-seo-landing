@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { blockOptions } from '../fields/blockOptions';
 
 export const PricingConfig: Block = {
 	slug: 'pricing',
@@ -86,5 +87,6 @@ export const PricingConfig: Block = {
 				},
 			],
 		},
+		blockOptions(),
 	],
 };

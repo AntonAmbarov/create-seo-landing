@@ -2,9 +2,11 @@ import type { FeautersBlock } from '@/payload/payload-types';
 import { cn } from '@/lib/utilities/ui';
 import { contentRender } from '@/lib/utilities/content/contentRender';
 import { getVariables } from '@/lib/queries/getVariables';
-import { Container } from '@/components/common/Container';
+import { Container } from '@/components/common/_Container';
 import { HTag } from '../common/Htag';
 import { icons } from 'lucide-react';
+import { getLayoutSettings } from '@/lib/layout/utils';
+import { LayoutWrapper } from '../common/LayoutWrapper';
 
 type Feature = FeautersBlock['features'][number];
 type IconNames = keyof typeof icons;
@@ -35,34 +37,39 @@ async function Feature({ title, description, icon }: Feature) {
 	);
 }
 
-export async function Feauters({ title, description, features }: FeautersBlock) {
+export async function Feauters({ title, description, features, layoutSettings }: FeautersBlock) {
 	const variables = (await getVariables()).variables;
+	const settings = getLayoutSettings(layoutSettings);
 
 	return (
-		<section
-			className={cn('relative overflow-hidden rounded-md border bg-gray-50 py-12 md:mx-5 md:py-24')}
-		>
-			<Container width="wide">
-				<div className={cn('space-y-4')}>
-					<HTag level={2} className={cn('text-center')}>
-						{contentRender(title, { variables })}
-					</HTag>
-					<p
-						className={cn(
-							'text-muted-foreground mt-3 text-pretty text-center text-lg tracking-[-0.01em] sm:text-2xl',
-						)}
+		<LayoutWrapper settings={settings}>
+			<div
+				className={cn(
+					'relative overflow-hidden rounded-md border bg-gray-50 py-12 md:mx-5 md:py-24',
+				)}
+			>
+				<Container width="wide">
+					<div className={cn('space-y-4')}>
+						<HTag level={2} className={cn('text-center')}>
+							{contentRender(title, { variables })}
+						</HTag>
+						<p
+							className={cn(
+								'text-muted-foreground mt-3 text-pretty text-center text-lg tracking-[-0.01em] sm:text-2xl',
+							)}
+						>
+							{contentRender(description, { variables })}
+						</p>
+					</div>
+					<div
+						className={cn('mx-auto mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3')}
 					>
-						{contentRender(description, { variables })}
-					</p>
-				</div>
-				<div
-					className={cn('mx-auto mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3')}
-				>
-					{features.map((f, i) => (
-						<Feature key={i} {...f} />
-					))}
-				</div>
-			</Container>
-		</section>
+						{features.map((f, i) => (
+							<Feature key={i} {...f} />
+						))}
+					</div>
+				</Container>
+			</div>
+		</LayoutWrapper>
 	);
 }
