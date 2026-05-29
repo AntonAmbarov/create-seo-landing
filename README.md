@@ -22,14 +22,17 @@ Marketers can build pages using ready-made blocks (Hero, Pricing, FAQ, Testimoni
 
 ## Key Features
 
-- **SEO-first architecture** — SSR, metadata, sitemap, schema.org, and optimized Core Web Vitals out of the box
+- **SEO-first architecture** - SSR, metadata, sitemap, schema.org, and optimized Core Web Vitals out of the box
 - **Block-based page builder** powered by Payload CMS
 - **Easy customization** via `overrides/blocks/` system
-- **Global variables & shortcodes** — change price, phone, or company name in one place
+- **Global variables & shortcodes** - change price, phone, or company name in one place
 - **Built-in blog** for content marketing
-- **shadcn/ui** + Tailwind — clean, accessible, and fully customizable components
+- **shadcn/ui** + Tailwind - clean, accessible, and fully customizable components
 - **PostgreSQL** support (with Drizzle)
 - **Live Preview** and Draft mode
+- **Bulk Import via JSON** — full page structure migration including meta tags, blocks, layouts, and all nested fields. Perfect for content migration between environments or AI-powered page generation — import hundreds of properly structured pages in seconds.
+- **Visual Block Customization** - administrators can customize every block directly from admin panel - padding, margins, background, theme (dark/light). Developers can easily extend with any additional settings (borders, shadows, animations, or any custom fields)
+
 
 ## Quick Start
 
@@ -76,7 +79,7 @@ Open http://localhost:3000/admin to access the admin panel.
 - [x] Clean shadcn/ui + Tailwind styling
 - [x] PostgreSQL + Docker setup
 - [ ] Blog
-- [ ] Block options
+- [x] Block options
 
 ### Phase 2 — Growth
 
@@ -87,7 +90,7 @@ Open http://localhost:3000/admin to access the admin panel.
 - [ ] A/B testing support for individual blocks
 - [ ] Enhanced Live Preview and on-demand revalidation
 - [ ] Multi-language (i18n) support
-- [x] Bulk landing page creation and editing via JSON import/export
+- [x] Bulk landing page creation via JSON import
 - [ ] Improved documentation + video guides
 
 ### Phase 3 — Maturity (Future)
@@ -95,7 +98,6 @@ Open http://localhost:3000/admin to access the admin panel.
 - [ ] Reusable Widgets system
 - [ ] AI-assisted content generation for blocks
 - [ ] Analytics integration (GTM/GA4) through server components
-- [ ] Plugin system for community-contributed blocks
 - [ ] CLI improvements and template update mechanism
 - [ ] Comprehensive SEO toolkit (auto schema.org, keyword suggestions, etc.)
 - [ ] Page Templates with smart block inheritance — create reusable page structures where editing a template updates all derived pages, except manually overridden blocks
