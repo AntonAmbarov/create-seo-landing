@@ -30,6 +30,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_payload_jobs_log_task_slug" AS ENUM('inline', 'schedulePublish');
   CREATE TYPE "public"."enum_payload_jobs_log_state" AS ENUM('failed', 'succeeded');
   CREATE TYPE "public"."enum_payload_jobs_task_slug" AS ENUM('inline', 'schedulePublish');
+  CREATE TYPE "public"."enum_homepage_blocks_contact_section_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum_homepage_blocks_feauters_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum_homepage_blocks_cta_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum_homepage_blocks_pricing_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum_homepage_blocks_testimonials_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum_homepage_blocks_team_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum_homepage_blocks_faq_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TABLE "pages_blocks_hero_bullets" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -975,6 +982,216 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone
   );
   
+  CREATE TABLE "homepage_blocks_hero_bullets" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"text" varchar NOT NULL
+  );
+  
+  CREATE TABLE "homepage_blocks_hero" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"description" varchar,
+  	"image_id" integer,
+  	"primary_cta_label" varchar NOT NULL,
+  	"primary_cta_link" varchar NOT NULL,
+  	"secondary_cta_label" varchar,
+  	"secondary_cta_link" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_contact_section" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"text" varchar NOT NULL,
+  	"form_id" integer NOT NULL,
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_homepage_blocks_contact_section_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_feauters_features" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"description" varchar NOT NULL,
+  	"icon" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_feauters" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"description" varchar,
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_homepage_blocks_feauters_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_cta" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"description" varchar,
+  	"button" varchar,
+  	"href" varchar,
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_homepage_blocks_cta_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_pricing_plans_features" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"feature" varchar NOT NULL
+  );
+  
+  CREATE TABLE "homepage_blocks_pricing_plans" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"price" numeric NOT NULL,
+  	"description" varchar NOT NULL,
+  	"is_popular" boolean DEFAULT false,
+  	"button_text" varchar NOT NULL,
+  	"button_link" varchar NOT NULL
+  );
+  
+  CREATE TABLE "homepage_blocks_pricing" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar DEFAULT 'Our Plans' NOT NULL,
+  	"description" varchar DEFAULT 'Choose the plan that fits your needs',
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_homepage_blocks_pricing_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_testimonials_testimonials" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"role" varchar NOT NULL,
+  	"avatar_id" integer NOT NULL,
+  	"testimonial" varchar NOT NULL
+  );
+  
+  CREATE TABLE "homepage_blocks_testimonials" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar DEFAULT 'Testimonials' NOT NULL,
+  	"description" varchar DEFAULT 'What our customers say about us',
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_homepage_blocks_testimonials_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_team_members" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"title" varchar NOT NULL,
+  	"bio" varchar NOT NULL,
+  	"image_id" integer NOT NULL
+  );
+  
+  CREATE TABLE "homepage_blocks_team" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"eyebrow" varchar DEFAULT 'Our team',
+  	"title" varchar DEFAULT 'Meet the people behind the product' NOT NULL,
+  	"description" varchar DEFAULT 'We''re a 100% remote team spread all across the world. Join us!',
+  	"join_button_label" varchar DEFAULT 'Join our team',
+  	"join_button_link" varchar,
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_homepage_blocks_team_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage_blocks_faq_items" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"question" varchar NOT NULL,
+  	"answer" varchar NOT NULL
+  );
+  
+  CREATE TABLE "homepage_blocks_faq" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar DEFAULT 'Frequently Asked Questions' NOT NULL,
+  	"description" varchar DEFAULT 'Quick answers to common questions about our products and services.',
+  	"default_open_index" numeric DEFAULT 0,
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_homepage_blocks_faq_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "homepage" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar DEFAULT 'Homepage' NOT NULL,
+  	"slug" varchar DEFAULT '/',
+  	"noindex" boolean DEFAULT false,
+  	"meta_title" varchar,
+  	"meta_description" varchar,
+  	"meta_image_id" integer,
+  	"meta_canonical_u_r_l" varchar,
+  	"updated_at" timestamp(3) with time zone,
+  	"created_at" timestamp(3) with time zone
+  );
+  
   ALTER TABLE "pages_blocks_hero_bullets" ADD CONSTRAINT "pages_blocks_hero_bullets_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_hero"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_hero" ADD CONSTRAINT "pages_blocks_hero_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_hero" ADD CONSTRAINT "pages_blocks_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -1068,6 +1285,26 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "footer_columns_links" ADD CONSTRAINT "footer_columns_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."footer_columns"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "footer_columns" ADD CONSTRAINT "footer_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."footer"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "sitevariables_variables" ADD CONSTRAINT "sitevariables_variables_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."sitevariables"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_hero_bullets" ADD CONSTRAINT "homepage_blocks_hero_bullets_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_blocks_hero"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_hero" ADD CONSTRAINT "homepage_blocks_hero_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_hero" ADD CONSTRAINT "homepage_blocks_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_contact_section" ADD CONSTRAINT "homepage_blocks_contact_section_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_contact_section" ADD CONSTRAINT "homepage_blocks_contact_section_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_feauters_features" ADD CONSTRAINT "homepage_blocks_feauters_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_blocks_feauters"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_feauters" ADD CONSTRAINT "homepage_blocks_feauters_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_cta" ADD CONSTRAINT "homepage_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_pricing_plans_features" ADD CONSTRAINT "homepage_blocks_pricing_plans_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_blocks_pricing_plans"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_pricing_plans" ADD CONSTRAINT "homepage_blocks_pricing_plans_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_blocks_pricing"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_pricing" ADD CONSTRAINT "homepage_blocks_pricing_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_testimonials_testimonials" ADD CONSTRAINT "homepage_blocks_testimonials_testimonials_avatar_id_media_id_fk" FOREIGN KEY ("avatar_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_testimonials_testimonials" ADD CONSTRAINT "homepage_blocks_testimonials_testimonials_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_blocks_testimonials"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_testimonials" ADD CONSTRAINT "homepage_blocks_testimonials_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_team_members" ADD CONSTRAINT "homepage_blocks_team_members_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_team_members" ADD CONSTRAINT "homepage_blocks_team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_blocks_team"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_team" ADD CONSTRAINT "homepage_blocks_team_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_faq_items" ADD CONSTRAINT "homepage_blocks_faq_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_blocks_faq"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage_blocks_faq" ADD CONSTRAINT "homepage_blocks_faq_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "homepage" ADD CONSTRAINT "homepage_meta_image_id_media_id_fk" FOREIGN KEY ("meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   CREATE INDEX "pages_blocks_hero_bullets_order_idx" ON "pages_blocks_hero_bullets" USING btree ("_order");
   CREATE INDEX "pages_blocks_hero_bullets_parent_id_idx" ON "pages_blocks_hero_bullets" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_hero_order_idx" ON "pages_blocks_hero" USING btree ("_order");
@@ -1312,7 +1549,50 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "footer_columns_order_idx" ON "footer_columns" USING btree ("_order");
   CREATE INDEX "footer_columns_parent_id_idx" ON "footer_columns" USING btree ("_parent_id");
   CREATE INDEX "sitevariables_variables_order_idx" ON "sitevariables_variables" USING btree ("_order");
-  CREATE INDEX "sitevariables_variables_parent_id_idx" ON "sitevariables_variables" USING btree ("_parent_id");`)
+  CREATE INDEX "sitevariables_variables_parent_id_idx" ON "sitevariables_variables" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_hero_bullets_order_idx" ON "homepage_blocks_hero_bullets" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_hero_bullets_parent_id_idx" ON "homepage_blocks_hero_bullets" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_hero_order_idx" ON "homepage_blocks_hero" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_hero_parent_id_idx" ON "homepage_blocks_hero" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_hero_path_idx" ON "homepage_blocks_hero" USING btree ("_path");
+  CREATE INDEX "homepage_blocks_hero_image_idx" ON "homepage_blocks_hero" USING btree ("image_id");
+  CREATE INDEX "homepage_blocks_contact_section_order_idx" ON "homepage_blocks_contact_section" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_contact_section_parent_id_idx" ON "homepage_blocks_contact_section" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_contact_section_path_idx" ON "homepage_blocks_contact_section" USING btree ("_path");
+  CREATE INDEX "homepage_blocks_contact_section_form_idx" ON "homepage_blocks_contact_section" USING btree ("form_id");
+  CREATE INDEX "homepage_blocks_feauters_features_order_idx" ON "homepage_blocks_feauters_features" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_feauters_features_parent_id_idx" ON "homepage_blocks_feauters_features" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_feauters_order_idx" ON "homepage_blocks_feauters" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_feauters_parent_id_idx" ON "homepage_blocks_feauters" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_feauters_path_idx" ON "homepage_blocks_feauters" USING btree ("_path");
+  CREATE INDEX "homepage_blocks_cta_order_idx" ON "homepage_blocks_cta" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_cta_parent_id_idx" ON "homepage_blocks_cta" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_cta_path_idx" ON "homepage_blocks_cta" USING btree ("_path");
+  CREATE INDEX "homepage_blocks_pricing_plans_features_order_idx" ON "homepage_blocks_pricing_plans_features" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_pricing_plans_features_parent_id_idx" ON "homepage_blocks_pricing_plans_features" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_pricing_plans_order_idx" ON "homepage_blocks_pricing_plans" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_pricing_plans_parent_id_idx" ON "homepage_blocks_pricing_plans" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_pricing_order_idx" ON "homepage_blocks_pricing" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_pricing_parent_id_idx" ON "homepage_blocks_pricing" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_pricing_path_idx" ON "homepage_blocks_pricing" USING btree ("_path");
+  CREATE INDEX "homepage_blocks_testimonials_testimonials_order_idx" ON "homepage_blocks_testimonials_testimonials" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_testimonials_testimonials_parent_id_idx" ON "homepage_blocks_testimonials_testimonials" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_testimonials_testimonials_avatar_idx" ON "homepage_blocks_testimonials_testimonials" USING btree ("avatar_id");
+  CREATE INDEX "homepage_blocks_testimonials_order_idx" ON "homepage_blocks_testimonials" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_testimonials_parent_id_idx" ON "homepage_blocks_testimonials" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_testimonials_path_idx" ON "homepage_blocks_testimonials" USING btree ("_path");
+  CREATE INDEX "homepage_blocks_team_members_order_idx" ON "homepage_blocks_team_members" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_team_members_parent_id_idx" ON "homepage_blocks_team_members" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_team_members_image_idx" ON "homepage_blocks_team_members" USING btree ("image_id");
+  CREATE INDEX "homepage_blocks_team_order_idx" ON "homepage_blocks_team" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_team_parent_id_idx" ON "homepage_blocks_team" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_team_path_idx" ON "homepage_blocks_team" USING btree ("_path");
+  CREATE INDEX "homepage_blocks_faq_items_order_idx" ON "homepage_blocks_faq_items" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_faq_items_parent_id_idx" ON "homepage_blocks_faq_items" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_faq_order_idx" ON "homepage_blocks_faq" USING btree ("_order");
+  CREATE INDEX "homepage_blocks_faq_parent_id_idx" ON "homepage_blocks_faq" USING btree ("_parent_id");
+  CREATE INDEX "homepage_blocks_faq_path_idx" ON "homepage_blocks_faq" USING btree ("_path");
+  CREATE INDEX "homepage_meta_meta_image_idx" ON "homepage" USING btree ("meta_image_id");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -1393,6 +1673,22 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "sitevariables_variables" CASCADE;
   DROP TABLE "sitevariables" CASCADE;
   DROP TABLE "contacts" CASCADE;
+  DROP TABLE "homepage_blocks_hero_bullets" CASCADE;
+  DROP TABLE "homepage_blocks_hero" CASCADE;
+  DROP TABLE "homepage_blocks_contact_section" CASCADE;
+  DROP TABLE "homepage_blocks_feauters_features" CASCADE;
+  DROP TABLE "homepage_blocks_feauters" CASCADE;
+  DROP TABLE "homepage_blocks_cta" CASCADE;
+  DROP TABLE "homepage_blocks_pricing_plans_features" CASCADE;
+  DROP TABLE "homepage_blocks_pricing_plans" CASCADE;
+  DROP TABLE "homepage_blocks_pricing" CASCADE;
+  DROP TABLE "homepage_blocks_testimonials_testimonials" CASCADE;
+  DROP TABLE "homepage_blocks_testimonials" CASCADE;
+  DROP TABLE "homepage_blocks_team_members" CASCADE;
+  DROP TABLE "homepage_blocks_team" CASCADE;
+  DROP TABLE "homepage_blocks_faq_items" CASCADE;
+  DROP TABLE "homepage_blocks_faq" CASCADE;
+  DROP TABLE "homepage" CASCADE;
   DROP TYPE "public"."pad_t";
   DROP TYPE "public"."pad_btm";
   DROP TYPE "public"."mar_t";
@@ -1420,5 +1716,12 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_forms_confirmation_type";
   DROP TYPE "public"."enum_payload_jobs_log_task_slug";
   DROP TYPE "public"."enum_payload_jobs_log_state";
-  DROP TYPE "public"."enum_payload_jobs_task_slug";`)
+  DROP TYPE "public"."enum_payload_jobs_task_slug";
+  DROP TYPE "public"."enum_homepage_blocks_contact_section_layout_settings_width";
+  DROP TYPE "public"."enum_homepage_blocks_feauters_layout_settings_width";
+  DROP TYPE "public"."enum_homepage_blocks_cta_layout_settings_width";
+  DROP TYPE "public"."enum_homepage_blocks_pricing_layout_settings_width";
+  DROP TYPE "public"."enum_homepage_blocks_testimonials_layout_settings_width";
+  DROP TYPE "public"."enum_homepage_blocks_team_layout_settings_width";
+  DROP TYPE "public"."enum_homepage_blocks_faq_layout_settings_width";`)
 }
