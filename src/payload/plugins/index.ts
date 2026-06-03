@@ -82,7 +82,7 @@ export const plugins: Plugin[] = [
 		enabled: true,
 		collections: { media: true },
 		token: process.env.BLOB_READ_WRITE_TOKEN,
-		clientUploads: false,
+		clientUploads: true,
 		addRandomSuffix: true,
 		cacheControlMaxAge: 60 * 60 * 24 * 365,
 	}),
