@@ -15,19 +15,17 @@ const nextConfig: NextConfig = {
 	images: {
 		localPatterns: [
 			{
-				pathname: '/api/media/file/**',
+				pathname: '/media/',
 			},
 		],
 		qualities: [100],
 		remotePatterns: [
-			...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
-				const url = new URL(item);
-
-				return {
-					hostname: url.hostname,
-					protocol: url.protocol.replace(':', '') as 'http' | 'https',
-				};
-			}),
+			{
+				protocol: 'https',
+				hostname: '*.public.blob.vercel-storage.com',
+				port: '',
+				pathname: '/**',
+			},
 		],
 	},
 	webpack: (webpackConfig) => {
@@ -44,7 +42,7 @@ const nextConfig: NextConfig = {
 	experimental: {
 		staleTimes: {
 			dynamic: 0,
-			static: 0,
+			static: 30,
 		},
 	},
 };
