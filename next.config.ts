@@ -20,10 +20,6 @@ const nextConfig: NextConfig = {
 				port: '',
 				pathname: '/**',
 			},
-			{
-				protocol: 'https',
-				hostname: '*.blob.vercel-storage.com',
-			},
 		],
 	},
 	webpack: (webpackConfig) => {

@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import path from 'path';
 import { authenticated } from '@/access/authenticated';
 
 export const Media: CollectionConfig = {
@@ -16,7 +15,6 @@ export const Media: CollectionConfig = {
 	},
 	upload: {
 		disableLocalStorage: true,
-		adminThumbnail: 'thumbnail',
 		focalPoint: true,
 	},
 	fields: [
