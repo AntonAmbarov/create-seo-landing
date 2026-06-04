@@ -15,7 +15,6 @@ export const Media: CollectionConfig = {
 		delete: authenticated,
 	},
 	upload: {
-		staticDir: path.resolve(process.cwd(), 'public/media'),
 		adminThumbnail: 'thumbnail',
 		focalPoint: true,
 		imageSizes: [
