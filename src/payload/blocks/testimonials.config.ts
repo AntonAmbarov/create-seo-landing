@@ -47,7 +47,6 @@ export const TestimonialsConfig: Block = {
 					type: 'upload',
 					relationTo: 'media',
 					label: 'Avatar Image',
-					required: true,
 					admin: {
 						description: 'Profile picture of the person',
 					},

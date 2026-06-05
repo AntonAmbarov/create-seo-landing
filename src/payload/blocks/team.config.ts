@@ -67,7 +67,6 @@ export const TeamConfig: Block = {
 					type: 'upload',
 					relationTo: 'media',
 					label: 'Profile Image',
-					required: true,
 					admin: {
 						description: 'Square photo of the team member',
 					},
