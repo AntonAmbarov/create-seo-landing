@@ -16,11 +16,16 @@ export const BACKGROUND = {
 	gradient: 'bg-gradient-to-br from-primary/10 via-transparent to-secondary/10',
 } as const;
 
+export const SURFACE_THEME = {
+	solid: 'bg-accent-purple text-accent-purple-foreground',
+	soft: 'bg-lavender text-lavender-foreground',
+};
+
 export const WIDTH = {
-	narrow: 'max-w-3xl',
-	normal: 'max-w-5xl',
-	wide: 'max-w-7xl',
-	full: 'max-w-none',
+	narrow: 'w-full max-w-3xl',
+	normal: 'w-full max-w-5xl',
+	wide: 'w-full max-w-7xl',
+	full: 'w-full',
 } as const;
 
 export const COMMON_DEFAULT_SETTINGS: Partial<LayoutSettings> = {
@@ -30,4 +35,5 @@ export const COMMON_DEFAULT_SETTINGS: Partial<LayoutSettings> = {
 	marginTop: 'none',
 	marginBottom: 'none',
 	background: 'none',
+	theme: 'soft',
 };

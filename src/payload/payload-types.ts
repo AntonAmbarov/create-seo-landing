@@ -168,6 +168,7 @@ export interface Page {
         | TestimonialsBlock
         | TeamBlock
         | FaqBlock
+        | StatsBlock
       )[]
     | null;
   meta?: {
@@ -445,6 +446,7 @@ export interface LayoutSettings {
   marginBottom?: ('none' | 'small' | 'medium' | 'large' | 'xlarge') | null;
   width?: ('narrow' | 'normal' | 'wide' | 'full') | null;
   background?: ('none' | 'light' | 'dark' | 'accent' | 'gradient') | null;
+  theme?: ('solid' | 'soft') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -593,6 +595,35 @@ export interface FaqBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'faq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  theme?: ('light' | 'dark') | null;
+  eyebrow?: string | null;
+  heading?: string | null;
+  subheading?: string | null;
+  layout?: ('row' | 'grid') | null;
+  stats: {
+    /**
+     * e.g. 50K
+     */
+    value: string;
+    /**
+     * e.g. + or %
+     */
+    suffix?: string | null;
+    label: string;
+    description?: string | null;
+    icon?: ('trending' | 'users' | 'star' | 'zap' | 'globe' | 'chart') | null;
+    id?: string | null;
+  }[];
+  layoutSettings?: LayoutSettings;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stats';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -977,6 +1008,7 @@ export interface PagesSelect<T extends boolean = true> {
         testimonials?: T | TestimonialsBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
         faq?: T | FaqBlockSelect<T>;
+        stats?: T | StatsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1046,6 +1078,7 @@ export interface LayoutSettingsSelect<T extends boolean = true> {
   marginBottom?: T;
   width?: T;
   background?: T;
+  theme?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1169,6 +1202,30 @@ export interface FaqBlockSelect<T extends boolean = true> {
         id?: T;
       };
   defaultOpenIndex?: T;
+  layoutSettings?: T | LayoutSettingsSelect<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  theme?: T;
+  eyebrow?: T;
+  heading?: T;
+  subheading?: T;
+  layout?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        suffix?: T;
+        label?: T;
+        description?: T;
+        icon?: T;
+        id?: T;
+      };
   layoutSettings?: T | LayoutSettingsSelect<T>;
   id?: T;
   blockName?: T;

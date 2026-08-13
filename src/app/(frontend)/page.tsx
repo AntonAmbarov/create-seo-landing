@@ -1,4 +1,5 @@
 import { RenderBlocks } from '@/components/blocks/RenderBlocks';
+import { ArrowLink } from '@/components/common/ArrowLink';
 import { getHomepage } from '@/lib/queries/getHomepage';
 import { generateMeta } from '@/lib/utilities/generateMeta';
 import { Metadata } from 'next';
@@ -17,15 +18,23 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-	const homepage = await getHomepage();
+	// const homepage = await getHomepage();
 
-	if (!homepage) {
-		notFound();
-	}
+	// if (!homepage) {
+	// 	notFound();
+	// }
+
+	// return (
+	// 	<>
+	// 		<RenderBlocks blocks={homepage.blocks} />
+	// 	</>
+	// );
 
 	return (
 		<>
-			<RenderBlocks blocks={homepage.blocks} />
+			<ArrowLink href="#" newTab={false}>
+				'Пример ссылки
+			</ArrowLink>
 		</>
 	);
 }

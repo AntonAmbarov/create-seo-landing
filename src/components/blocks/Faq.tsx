@@ -18,7 +18,6 @@ const FAQ_DEFAULT: Partial<LayoutSettings> = {
 	paddingBottom: 'medium',
 	marginTop: 'none',
 	marginBottom: 'none',
-	background: 'dark',
 };
 
 export async function Faq({

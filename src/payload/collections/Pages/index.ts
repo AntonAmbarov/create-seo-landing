@@ -14,13 +14,17 @@ import {
 	PreviewField,
 } from '@payloadcms/plugin-seo/fields';
 import { generatePreviewPath } from '@/lib/utilities/generatePreviewPath';
-import { ContactSection, HeroConfig } from '@/payload/blocks';
-import { FeautersConfig } from '@/payload/blocks/feauters.config';
-import { CTAConfig } from '@/payload/blocks/cta.config';
-import { PricingConfig } from '@/payload/blocks/pricing.config';
-import { TestimonialsConfig } from '@/payload/blocks/testimonials.config';
-import { TeamConfig } from '@/payload/blocks/team.config';
-import { FaqConfig } from '@/payload/blocks/faq.config';
+import {
+	ContactSection,
+	CTAConfig,
+	FaqConfig,
+	FeautersConfig,
+	HeroConfig,
+	PricingConfig,
+	TeamConfig,
+	TestimonialsConfig,
+	StatsConfig,
+} from '@/payload/blocks';
 
 export const Pages: CollectionConfig<'pages'> = {
 	slug: 'pages',
@@ -79,6 +83,7 @@ export const Pages: CollectionConfig<'pages'> = {
 								TestimonialsConfig,
 								TeamConfig,
 								FaqConfig,
+								StatsConfig,
 							],
 						},
 					],

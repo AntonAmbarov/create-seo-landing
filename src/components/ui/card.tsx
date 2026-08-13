@@ -1,14 +1,25 @@
 import { cn } from '@/lib/utilities/ui';
+import { type VariantProps, cva } from 'class-variance-authority';
 import * as React from 'react';
 
-const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => {
-	return (
-		<div
-			data-slot="card"
-			className={cn('bg-card text-card-foreground rounded-lg border shadow-sm', className)}
-			{...props}
-		/>
-	);
+const cardVariants = cva('', {
+	variants: {
+		variant: {
+			default: 'bg-card text-card-foreground rounded-lg border shadow-sm',
+			flat: 'bg-muted text-foreground rounded-2xl',
+			highlighted: 'bg-lavender text-lavender-foreground rounded-2xl',
+		},
+	},
+	defaultVariants: {
+		variant: 'default',
+	},
+});
+
+export interface CardProps
+	extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {}
+
+const Card: React.FC<CardProps> = ({ className, variant, ...props }) => {
+	return <div data-slot="card" className={cn(cardVariants({ variant }), className)} {...props} />;
 };
 
 const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => {
@@ -25,7 +36,7 @@ const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({ classNa
 	return (
 		<h3
 			data-slot="card-title"
-			className={cn('text-2xl leading-none font-semibold tracking-tight', className)}
+			className={cn('text-2xl font-semibold leading-none tracking-tight', className)}
 			{...props}
 		/>
 	);

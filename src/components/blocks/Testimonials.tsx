@@ -64,7 +64,7 @@ export async function Testimonials({
 				{contentRender(description, { variables })}
 			</p>
 
-			<div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			<div className="mx-auto mt-16 grid w-full grid-cols-1 items-stretch gap-12 sm:grid-cols-2 lg:grid-cols-3">
 				{testimonials.map((testimonial, i) => (
 					<TestimonialCard key={i} {...testimonial} />
 				))}

@@ -1,6 +1,6 @@
 import { LayoutSettings } from '@/payload/payload-types';
 import { removeNulls } from '../utilities/removeNulls';
-import { BACKGROUND, COMMON_DEFAULT_SETTINGS, SPACING, WIDTH } from './constants';
+import { BACKGROUND, COMMON_DEFAULT_SETTINGS, SPACING, WIDTH, SURFACE_THEME } from './constants';
 import { cn } from '../utilities/ui';
 
 const normalizeSettings = (
@@ -34,6 +34,7 @@ export const getClassesForSattings = (settings: LayoutSettings) => {
 			marginTop && SPACING[marginTop].mt,
 			marginBottom && SPACING[marginBottom].mb,
 			background && BACKGROUND[background],
+			
 		),
 		width: cn(width && WIDTH[width]),
 	};

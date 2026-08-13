@@ -8,12 +8,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."mar_btn" AS ENUM('none', 'small', 'medium', 'large', 'xlarge');
   CREATE TYPE "public"."enum_pages_blocks_contact_section_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."bg" AS ENUM('none', 'light', 'dark', 'accent', 'gradient');
+  CREATE TYPE "public"."theme" AS ENUM('solid', 'soft');
   CREATE TYPE "public"."enum_pages_blocks_feauters_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum_pages_blocks_cta_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum_pages_blocks_pricing_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum_pages_blocks_testimonials_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum_pages_blocks_team_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum_pages_blocks_faq_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum_pages_blocks_stats_stats_icon" AS ENUM('trending', 'users', 'star', 'zap', 'globe', 'chart');
+  CREATE TYPE "public"."enum_pages_blocks_stats_theme" AS ENUM('light', 'dark');
+  CREATE TYPE "public"."enum_pages_blocks_stats_layout" AS ENUM('row', 'grid');
+  CREATE TYPE "public"."enum_pages_blocks_stats_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum_pages_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__pages_v_blocks_contact_section_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum__pages_v_blocks_feauters_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
@@ -22,6 +27,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__pages_v_blocks_testimonials_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum__pages_v_blocks_team_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum__pages_v_blocks_faq_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
+  CREATE TYPE "public"."enum__pages_v_blocks_stats_stats_icon" AS ENUM('trending', 'users', 'star', 'zap', 'globe', 'chart');
+  CREATE TYPE "public"."enum__pages_v_blocks_stats_theme" AS ENUM('light', 'dark');
+  CREATE TYPE "public"."enum__pages_v_blocks_stats_layout" AS ENUM('row', 'grid');
+  CREATE TYPE "public"."enum__pages_v_blocks_stats_layout_settings_width" AS ENUM('narrow', 'normal', 'wide', 'full');
   CREATE TYPE "public"."enum__pages_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_posts_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__posts_v_version_status" AS ENUM('draft', 'published');
@@ -73,6 +82,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_pages_blocks_contact_section_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -98,6 +108,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_pages_blocks_feauters_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -116,6 +127,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_pages_blocks_cta_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -151,6 +163,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_pages_blocks_pricing_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -177,6 +190,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_pages_blocks_testimonials_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -206,6 +220,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_pages_blocks_team_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -231,6 +246,38 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_pages_blocks_faq_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_stats_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"suffix" varchar,
+  	"label" varchar,
+  	"description" varchar,
+  	"icon" "enum_pages_blocks_stats_stats_icon"
+  );
+  
+  CREATE TABLE "pages_blocks_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"theme" "enum_pages_blocks_stats_theme" DEFAULT 'dark',
+  	"eyebrow" varchar,
+  	"heading" varchar,
+  	"subheading" varchar,
+  	"layout" "enum_pages_blocks_stats_layout" DEFAULT 'row',
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum_pages_blocks_stats_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -288,6 +335,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum__pages_v_blocks_contact_section_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -315,6 +363,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum__pages_v_blocks_feauters_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -334,6 +383,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum__pages_v_blocks_cta_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -372,6 +422,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum__pages_v_blocks_pricing_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -400,6 +451,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum__pages_v_blocks_testimonials_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -431,6 +483,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum__pages_v_blocks_team_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -458,6 +511,40 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum__pages_v_blocks_faq_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_stats_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"suffix" varchar,
+  	"label" varchar,
+  	"description" varchar,
+  	"icon" "enum__pages_v_blocks_stats_stats_icon",
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"theme" "enum__pages_v_blocks_stats_theme" DEFAULT 'dark',
+  	"eyebrow" varchar,
+  	"heading" varchar,
+  	"subheading" varchar,
+  	"layout" "enum__pages_v_blocks_stats_layout" DEFAULT 'row',
+  	"layout_settings_padding_top" "pad_t",
+  	"layout_settings_padding_bottom" "pad_btm",
+  	"layout_settings_margin_top" "mar_t",
+  	"layout_settings_margin_bottom" "mar_btn",
+  	"layout_settings_width" "enum__pages_v_blocks_stats_layout_settings_width",
+  	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -580,43 +667,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"width" numeric,
   	"height" numeric,
   	"focal_x" numeric,
-  	"focal_y" numeric,
-  	"sizes_thumbnail_url" varchar,
-  	"sizes_thumbnail_width" numeric,
-  	"sizes_thumbnail_height" numeric,
-  	"sizes_thumbnail_mime_type" varchar,
-  	"sizes_thumbnail_filesize" numeric,
-  	"sizes_thumbnail_filename" varchar,
-  	"sizes_small_url" varchar,
-  	"sizes_small_width" numeric,
-  	"sizes_small_height" numeric,
-  	"sizes_small_mime_type" varchar,
-  	"sizes_small_filesize" numeric,
-  	"sizes_small_filename" varchar,
-  	"sizes_medium_url" varchar,
-  	"sizes_medium_width" numeric,
-  	"sizes_medium_height" numeric,
-  	"sizes_medium_mime_type" varchar,
-  	"sizes_medium_filesize" numeric,
-  	"sizes_medium_filename" varchar,
-  	"sizes_large_url" varchar,
-  	"sizes_large_width" numeric,
-  	"sizes_large_height" numeric,
-  	"sizes_large_mime_type" varchar,
-  	"sizes_large_filesize" numeric,
-  	"sizes_large_filename" varchar,
-  	"sizes_xlarge_url" varchar,
-  	"sizes_xlarge_width" numeric,
-  	"sizes_xlarge_height" numeric,
-  	"sizes_xlarge_mime_type" varchar,
-  	"sizes_xlarge_filesize" numeric,
-  	"sizes_xlarge_filename" varchar,
-  	"sizes_og_url" varchar,
-  	"sizes_og_width" numeric,
-  	"sizes_og_height" numeric,
-  	"sizes_og_mime_type" varchar,
-  	"sizes_og_filesize" numeric,
-  	"sizes_og_filename" varchar
+  	"focal_y" numeric
   );
   
   CREATE TABLE "categories_breadcrumbs" (
@@ -1018,6 +1069,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_homepage_blocks_contact_section_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -1043,6 +1095,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_homepage_blocks_feauters_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -1061,6 +1114,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_homepage_blocks_cta_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -1096,6 +1150,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_homepage_blocks_pricing_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -1105,7 +1160,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
   	"role" varchar NOT NULL,
-  	"avatar_id" integer NOT NULL,
+  	"avatar_id" integer,
   	"testimonial" varchar NOT NULL
   );
   
@@ -1122,6 +1177,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_homepage_blocks_testimonials_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -1132,7 +1188,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"name" varchar NOT NULL,
   	"title" varchar NOT NULL,
   	"bio" varchar NOT NULL,
-  	"image_id" integer NOT NULL
+  	"image_id" integer
   );
   
   CREATE TABLE "homepage_blocks_team" (
@@ -1151,6 +1207,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_homepage_blocks_team_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -1176,6 +1233,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"layout_settings_margin_bottom" "mar_btn",
   	"layout_settings_width" "enum_homepage_blocks_faq_layout_settings_width",
   	"layout_settings_background" "bg",
+  	"layout_settings_theme" "theme",
   	"block_name" varchar
   );
   
@@ -1211,6 +1269,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "pages_blocks_team" ADD CONSTRAINT "pages_blocks_team_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_faq_items" ADD CONSTRAINT "pages_blocks_faq_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_faq"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_faq" ADD CONSTRAINT "pages_blocks_faq_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_stats_stats" ADD CONSTRAINT "pages_blocks_stats_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_stats"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_stats" ADD CONSTRAINT "pages_blocks_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages" ADD CONSTRAINT "pages_meta_image_id_media_id_fk" FOREIGN KEY ("meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_hero_bullets" ADD CONSTRAINT "_pages_v_blocks_hero_bullets_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_hero"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_hero" ADD CONSTRAINT "_pages_v_blocks_hero_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
@@ -1231,6 +1291,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_pages_v_blocks_team" ADD CONSTRAINT "_pages_v_blocks_team_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_faq_items" ADD CONSTRAINT "_pages_v_blocks_faq_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_faq"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_faq" ADD CONSTRAINT "_pages_v_blocks_faq_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_stats_stats" ADD CONSTRAINT "_pages_v_blocks_stats_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_stats"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_stats" ADD CONSTRAINT "_pages_v_blocks_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_parent_id_pages_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."pages"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_meta_image_id_media_id_fk" FOREIGN KEY ("version_meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "posts_populated_authors" ADD CONSTRAINT "posts_populated_authors_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
@@ -1347,6 +1409,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "pages_blocks_faq_order_idx" ON "pages_blocks_faq" USING btree ("_order");
   CREATE INDEX "pages_blocks_faq_parent_id_idx" ON "pages_blocks_faq" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_faq_path_idx" ON "pages_blocks_faq" USING btree ("_path");
+  CREATE INDEX "pages_blocks_stats_stats_order_idx" ON "pages_blocks_stats_stats" USING btree ("_order");
+  CREATE INDEX "pages_blocks_stats_stats_parent_id_idx" ON "pages_blocks_stats_stats" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_stats_order_idx" ON "pages_blocks_stats" USING btree ("_order");
+  CREATE INDEX "pages_blocks_stats_parent_id_idx" ON "pages_blocks_stats" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_stats_path_idx" ON "pages_blocks_stats" USING btree ("_path");
   CREATE INDEX "pages_meta_meta_image_idx" ON "pages" USING btree ("meta_image_id");
   CREATE UNIQUE INDEX "pages_slug_idx" ON "pages" USING btree ("slug");
   CREATE INDEX "pages_updated_at_idx" ON "pages" USING btree ("updated_at");
@@ -1394,6 +1461,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_faq_order_idx" ON "_pages_v_blocks_faq" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_faq_parent_id_idx" ON "_pages_v_blocks_faq" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_faq_path_idx" ON "_pages_v_blocks_faq" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_stats_stats_order_idx" ON "_pages_v_blocks_stats_stats" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_stats_stats_parent_id_idx" ON "_pages_v_blocks_stats_stats" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_stats_order_idx" ON "_pages_v_blocks_stats" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_stats_parent_id_idx" ON "_pages_v_blocks_stats" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_stats_path_idx" ON "_pages_v_blocks_stats" USING btree ("_path");
   CREATE INDEX "_pages_v_parent_idx" ON "_pages_v" USING btree ("parent_id");
   CREATE INDEX "_pages_v_version_meta_version_meta_image_idx" ON "_pages_v" USING btree ("version_meta_image_id");
   CREATE INDEX "_pages_v_version_version_slug_idx" ON "_pages_v" USING btree ("version_slug");
@@ -1442,12 +1514,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "media_updated_at_idx" ON "media" USING btree ("updated_at");
   CREATE INDEX "media_created_at_idx" ON "media" USING btree ("created_at");
   CREATE UNIQUE INDEX "media_filename_idx" ON "media" USING btree ("filename");
-  CREATE INDEX "media_sizes_thumbnail_sizes_thumbnail_filename_idx" ON "media" USING btree ("sizes_thumbnail_filename");
-  CREATE INDEX "media_sizes_small_sizes_small_filename_idx" ON "media" USING btree ("sizes_small_filename");
-  CREATE INDEX "media_sizes_medium_sizes_medium_filename_idx" ON "media" USING btree ("sizes_medium_filename");
-  CREATE INDEX "media_sizes_large_sizes_large_filename_idx" ON "media" USING btree ("sizes_large_filename");
-  CREATE INDEX "media_sizes_xlarge_sizes_xlarge_filename_idx" ON "media" USING btree ("sizes_xlarge_filename");
-  CREATE INDEX "media_sizes_og_sizes_og_filename_idx" ON "media" USING btree ("sizes_og_filename");
   CREATE INDEX "categories_breadcrumbs_order_idx" ON "categories_breadcrumbs" USING btree ("_order");
   CREATE INDEX "categories_breadcrumbs_parent_id_idx" ON "categories_breadcrumbs" USING btree ("_parent_id");
   CREATE INDEX "categories_breadcrumbs_doc_idx" ON "categories_breadcrumbs" USING btree ("doc_id");
@@ -1612,6 +1678,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "pages_blocks_team" CASCADE;
   DROP TABLE "pages_blocks_faq_items" CASCADE;
   DROP TABLE "pages_blocks_faq" CASCADE;
+  DROP TABLE "pages_blocks_stats_stats" CASCADE;
+  DROP TABLE "pages_blocks_stats" CASCADE;
   DROP TABLE "pages" CASCADE;
   DROP TABLE "_pages_v_blocks_hero_bullets" CASCADE;
   DROP TABLE "_pages_v_blocks_hero" CASCADE;
@@ -1628,6 +1696,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_pages_v_blocks_team" CASCADE;
   DROP TABLE "_pages_v_blocks_faq_items" CASCADE;
   DROP TABLE "_pages_v_blocks_faq" CASCADE;
+  DROP TABLE "_pages_v_blocks_stats_stats" CASCADE;
+  DROP TABLE "_pages_v_blocks_stats" CASCADE;
   DROP TABLE "_pages_v" CASCADE;
   DROP TABLE "posts_populated_authors" CASCADE;
   DROP TABLE "posts" CASCADE;
@@ -1695,12 +1765,17 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."mar_btn";
   DROP TYPE "public"."enum_pages_blocks_contact_section_layout_settings_width";
   DROP TYPE "public"."bg";
+  DROP TYPE "public"."theme";
   DROP TYPE "public"."enum_pages_blocks_feauters_layout_settings_width";
   DROP TYPE "public"."enum_pages_blocks_cta_layout_settings_width";
   DROP TYPE "public"."enum_pages_blocks_pricing_layout_settings_width";
   DROP TYPE "public"."enum_pages_blocks_testimonials_layout_settings_width";
   DROP TYPE "public"."enum_pages_blocks_team_layout_settings_width";
   DROP TYPE "public"."enum_pages_blocks_faq_layout_settings_width";
+  DROP TYPE "public"."enum_pages_blocks_stats_stats_icon";
+  DROP TYPE "public"."enum_pages_blocks_stats_theme";
+  DROP TYPE "public"."enum_pages_blocks_stats_layout";
+  DROP TYPE "public"."enum_pages_blocks_stats_layout_settings_width";
   DROP TYPE "public"."enum_pages_status";
   DROP TYPE "public"."enum__pages_v_blocks_contact_section_layout_settings_width";
   DROP TYPE "public"."enum__pages_v_blocks_feauters_layout_settings_width";
@@ -1709,6 +1784,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__pages_v_blocks_testimonials_layout_settings_width";
   DROP TYPE "public"."enum__pages_v_blocks_team_layout_settings_width";
   DROP TYPE "public"."enum__pages_v_blocks_faq_layout_settings_width";
+  DROP TYPE "public"."enum__pages_v_blocks_stats_stats_icon";
+  DROP TYPE "public"."enum__pages_v_blocks_stats_theme";
+  DROP TYPE "public"."enum__pages_v_blocks_stats_layout";
+  DROP TYPE "public"."enum__pages_v_blocks_stats_layout_settings_width";
   DROP TYPE "public"."enum__pages_v_version_status";
   DROP TYPE "public"."enum_posts_status";
   DROP TYPE "public"."enum__posts_v_version_status";

@@ -6,3 +6,4 @@ export * from './feauters.config';
 export * from './pricing.config';
 export * from './team.config';
 export * from './testimonials.config';
+export * from './stats.config';

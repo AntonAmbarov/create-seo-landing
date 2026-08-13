@@ -41,6 +41,7 @@ export function blockOptions(): Field {
 				dbName: 'bg',
 				options: ['none', 'light', 'dark', 'accent', 'gradient'],
 			},
+			{ name: 'theme', type: 'select', dbName: 'theme', options: ['solid', 'soft'] },
 		],
 	};
 }
