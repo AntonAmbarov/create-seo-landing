@@ -15,9 +15,9 @@ import { getServerSideURL } from '@/lib/utilities/getURL';
 import { Header } from './globals/Header';
 import { Footer } from './globals/Footer';
 import { SiteVariables } from './globals/SiteVariables';
-import { Contacts } from './globals/Contacts';
 import { LandingImport } from './collections/LandingImport';
 import { Homepage } from './globals/Homepage';
+import { Tenants } from './collections/Tenants';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -59,7 +59,6 @@ export default buildConfig({
 			],
 		},
 	},
-	// This config helps us configure global or default features that the other editors can inherit
 	editor: defaultLexical,
 	db: postgresAdapter({
 		pool: {
@@ -67,9 +66,20 @@ export default buildConfig({
 		},
 		push: false,
 	}),
-	collections: [Pages, Posts, LandingImport, Media, Categories, Users],
+	collections: [
+		Pages,
+		Posts,
+		LandingImport,
+		Media,
+		Categories,
+		Users,
+		Header,
+		Footer,
+		Tenants,
+		Homepage,
+	],
 	cors: [getServerSideURL()].filter(Boolean),
-	globals: [Header, Footer, SiteVariables, Contacts, Homepage],
+	globals: [SiteVariables],
 	plugins,
 	secret: process.env.PAYLOAD_SECRET,
 	sharp,

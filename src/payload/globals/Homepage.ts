@@ -6,7 +6,7 @@ import {
 	MetaDescriptionField,
 	MetaImageField,
 } from '@payloadcms/plugin-seo/fields';
-import { type GlobalConfig } from 'payload';
+import { CollectionConfig } from 'payload';
 import {
 	HeroConfig,
 	ContactSection,
@@ -18,12 +18,11 @@ import {
 	FaqConfig,
 } from '../blocks';
 
-export const Homepage: GlobalConfig = {
+export const Homepage: CollectionConfig = {
 	slug: 'homepage',
-	label: 'Homepage',
 	admin: {
-		group: 'Page',
-		description: 'Home Page Settings',
+		group: 'Глобалы',
+		description: 'Главная страница для тенанта',
 	},
 	access: {
 		read: authenticatedOrPublished,

@@ -73,6 +73,10 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    header: Header;
+    footer: Footer;
+    tenants: Tenant;
+    homepage: Homepage;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -90,6 +94,10 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -104,18 +112,10 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
-    header: Header;
-    footer: Footer;
     sitevariables: Sitevariable;
-    contacts: Contact;
-    homepage: Homepage;
   };
   globalsSelect: {
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
     sitevariables: SitevariablesSelect<false> | SitevariablesSelect<true>;
-    contacts: ContactsSelect<false> | ContactsSelect<true>;
-    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -711,6 +711,12 @@ export interface Category {
 export interface User {
   id: number;
   name?: string | null;
+  tenants?:
+    | {
+        tenant: number | Tenant;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -729,6 +735,27 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: number;
+  /**
+   * Любое название сайта. Используется только в админке
+   */
+  name: string;
+  /**
+   * Домен аффилиата
+   */
+  domain: string;
+  /**
+   * Слаг нужен только для api роутов. Для удобства назовки как домен, но без доменной зоны
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Create landing pages by pasting a JSON object.
@@ -751,6 +778,97 @@ export interface LandingImport {
     | boolean
     | null;
   result?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  /**
+   * Main navigation items
+   */
+  navItems?:
+    | {
+        label: string;
+        link: string;
+        isExternal?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  showCta?: boolean | null;
+  ctaLabel?: string | null;
+  ctaLink?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  /**
+   * Укажи колонки от 1 до 4
+   */
+  columns?:
+    | {
+        title?: string | null;
+        links?:
+          | {
+              label: string;
+              link: string;
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Ты знаешь что это
+   */
+  copyright?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Главная страница для тенанта
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  title: string;
+  slug?: string | null;
+  noindex?: boolean | null;
+  blocks?:
+    | (
+        | HeroBlock
+        | ContactSectionBlock
+        | FeautersBlock
+        | CTABlock
+        | PricingBlock
+        | TestimonialsBlock
+        | TeamBlock
+        | FaqBlock
+      )[]
+    | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    canonicalURL?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -936,6 +1054,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'header';
+        value: number | Header;
+      } | null)
+    | ({
+        relationTo: 'footer';
+        value: number | Footer;
+      } | null)
+    | ({
+        relationTo: 'tenants';
+        value: number | Tenant;
+      } | null)
+    | ({
+        relationTo: 'homepage';
+        value: number | Homepage;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1317,6 +1451,12 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  tenants?:
+    | T
+    | {
+        tenant?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1333,6 +1473,93 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  tenant?: T;
+  navItems?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        isExternal?: T;
+        id?: T;
+      };
+  showCta?: T;
+  ctaLabel?: T;
+  ctaLink?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  tenant?: T;
+  columns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants_select".
+ */
+export interface TenantsSelect<T extends boolean = true> {
+  name?: T;
+  domain?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  tenant?: T;
+  title?: T;
+  slug?: T;
+  noindex?: T;
+  blocks?:
+    | T
+    | {
+        hero?: T | HeroBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+        feauters?: T | FeautersBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
+        pricing?: T | PricingBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        faq?: T | FaqBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        canonicalURL?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1571,59 +1798,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
- */
-export interface Header {
-  id: number;
-  /**
-   * Main navigation items
-   */
-  navItems?:
-    | {
-        label: string;
-        link: string;
-        isExternal?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  showCta?: boolean | null;
-  ctaLabel?: string | null;
-  ctaLink?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
- */
-export interface Footer {
-  id: number;
-  /**
-   * Add up to 4 columns
-   */
-  columns?:
-    | {
-        title?: string | null;
-        links?:
-          | {
-              label: string;
-              link: string;
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Text displayed at the bottom of the footer
-   */
-  copyright?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * Global shortcodes and variables. Use {{key}} in any rich text field.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1649,97 +1823,6 @@ export interface Sitevariable {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contacts".
- */
-export interface Contact {
-  id: number;
-  phone?: number | null;
-  email?: string | null;
-  address?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * Home Page Settings
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "homepage".
- */
-export interface Homepage {
-  id: number;
-  title: string;
-  slug?: string | null;
-  noindex?: boolean | null;
-  blocks?:
-    | (
-        | HeroBlock
-        | ContactSectionBlock
-        | FeautersBlock
-        | CTABlock
-        | PricingBlock
-        | TestimonialsBlock
-        | TeamBlock
-        | FaqBlock
-      )[]
-    | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    canonicalURL?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
- */
-export interface HeaderSelect<T extends boolean = true> {
-  navItems?:
-    | T
-    | {
-        label?: T;
-        link?: T;
-        isExternal?: T;
-        id?: T;
-      };
-  showCta?: T;
-  ctaLabel?: T;
-  ctaLink?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  columns?:
-    | T
-    | {
-        title?: T;
-        links?:
-          | T
-          | {
-              label?: T;
-              link?: T;
-              isExternal?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  copyright?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sitevariables_select".
  */
 export interface SitevariablesSelect<T extends boolean = true> {
@@ -1749,50 +1832,6 @@ export interface SitevariablesSelect<T extends boolean = true> {
         key?: T;
         value?: T;
         id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contacts_select".
- */
-export interface ContactsSelect<T extends boolean = true> {
-  phone?: T;
-  email?: T;
-  address?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "homepage_select".
- */
-export interface HomepageSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  noindex?: T;
-  blocks?:
-    | T
-    | {
-        hero?: T | HeroBlockSelect<T>;
-        contactSection?: T | ContactSectionBlockSelect<T>;
-        feauters?: T | FeautersBlockSelect<T>;
-        cta?: T | CTABlockSelect<T>;
-        pricing?: T | PricingBlockSelect<T>;
-        testimonials?: T | TestimonialsBlockSelect<T>;
-        team?: T | TeamBlockSelect<T>;
-        faq?: T | FaqBlockSelect<T>;
-      };
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-        canonicalURL?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -1,8 +1,10 @@
-import type { GlobalConfig } from 'payload';
+import type { CollectionConfig } from 'payload';
 
-export const Header: GlobalConfig = {
+export const Header: CollectionConfig = {
 	slug: 'header',
-	label: 'Header',
+	admin: {
+		group: 'Глобалы',
+	},
 	access: {
 		read: () => true,
 	},

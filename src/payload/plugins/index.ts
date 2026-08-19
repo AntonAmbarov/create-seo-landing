@@ -1,6 +1,7 @@
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs';
 import { redirectsPlugin } from '@payloadcms/plugin-redirects';
+import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
 import { seoPlugin } from '@payloadcms/plugin-seo';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 import { Plugin } from 'payload';
@@ -85,5 +86,18 @@ export const plugins: Plugin[] = [
 		clientUploads: true,
 		addRandomSuffix: true,
 		cacheControlMaxAge: 60 * 60 * 24 * 365,
+	}),
+	multiTenantPlugin({
+		collections: {
+			header: {
+				isGlobal: true,
+			},
+			footer: {
+				isGlobal: true,
+			},
+			homepage: {
+				isGlobal: true,
+			},
+		},
 	}),
 ];

@@ -1,10 +1,12 @@
-import type { GlobalConfig } from 'payload';
+import type { CollectionConfig } from 'payload';
 
-export const Footer: GlobalConfig = {
+export const Footer: CollectionConfig = {
 	slug: 'footer',
-	label: 'Footer',
 	access: {
 		read: () => true,
+	},
+	admin: {
+		group: 'Глобалы',
 	},
 	fields: [
 		{
@@ -15,7 +17,7 @@ export const Footer: GlobalConfig = {
 			maxRows: 4,
 			admin: {
 				initCollapsed: false,
-				description: 'Add up to 4 columns',
+				description: 'Укажи колонки от 1 до 4',
 			},
 			fields: [
 				{
@@ -56,7 +58,7 @@ export const Footer: GlobalConfig = {
 			label: 'Copyright Text',
 			defaultValue: '© 2026 SEO Landing Constructor. All rights reserved.',
 			admin: {
-				description: 'Text displayed at the bottom of the footer',
+				description: 'Ты знаешь что это',
 			},
 		},
 	],
